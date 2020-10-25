@@ -23,12 +23,6 @@ public class EnnemiesManager : MonoBehaviour
         StartCoroutine(coroutine);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private IEnumerator GenerateEnnemy(float waitTime)
     {
         Vector3 point;
@@ -36,7 +30,7 @@ public class EnnemiesManager : MonoBehaviour
         {
             yield return new WaitForSeconds(waitTime);
 
-            point = m_camera.ScreenToWorldPoint(new Vector3(Random.Range(0, Screen.width), Screen.height, m_player.transform.position.z - m_camera.transform.position.z));
+            point = m_camera.ScreenToWorldPoint(new Vector3(Random.Range(0, Screen.width), Screen.height, 10));
             Instantiate(ennemy, point, Quaternion.identity);
         }
     }

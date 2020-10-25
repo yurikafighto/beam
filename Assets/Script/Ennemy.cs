@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Ennemy : MonoBehaviour
+public class Ennemy : Entity
 {
     //This field gets serialized even though it is private
     //because it has the SerializeField attribute applied.
@@ -28,11 +28,36 @@ public class Ennemy : MonoBehaviour
             Destroy(gameObject); // destroy ennemy
         }
     }
-
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         // retrieve the main camera
         m_camera = Camera.main;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // if collides with the player
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // destroy the ennemy object
+            Destroy(gameObject);
+        }
+
+        // if collides with bullet
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            hp -= 10;
+
+            // if no more hp
+            if (hp <= 0)
+            {
+                // destroy the ennemy object
+                Destroy(gameObject);
+
+            }
+        }
+    }
+
 
 }

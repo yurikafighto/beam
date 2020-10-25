@@ -1,7 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Transactions;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
     //This field gets serialized even though it is private
     //because it has the SerializeField attribute applied.
@@ -13,10 +14,9 @@ public class Player : MonoBehaviour
     // time between projectiles
     private float projectileCD;
     [SerializeField]
-    GameObject projectile;
+    GameObject bullet;
 
     Stopwatch stopWatch;
-
 
     // Update is called once per frame
     void Update()
@@ -56,18 +56,41 @@ public class Player : MonoBehaviour
         // fire bullet
         if (Input.GetKey(KeyCode.Space) && stopWatch.ElapsedMilliseconds > projectileCD)
         {
-            Instantiate(projectile, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+            
+            Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + 1, 0), Quaternion.identity);
             stopWatch.Restart();
         }
 
 
     }
-
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
         stopWatch = new Stopwatch();
         stopWatch.Start();
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // if collides with ennemy 
+        if (collision.gameObject.CompareTag("Ennemy"))
+        {
+            hp -= 10;
+
+            // if no more hp
+            if (hp <= 0)
+            {
+                // destroy the player object
+                Destroy(gameObject);
+                
+            }
+        }
+    }
+
+    private void OnBulletHit()
+    {
+        
     }
 }
 
