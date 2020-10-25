@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
@@ -34,6 +35,19 @@ public class Bullet : MonoBehaviour
     {
         // retrieve the main camera
         m_camera = Camera.main;
+    }
+
+    //public event Action<Collision> OnHit;
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //OnHit = collision => OnCollisionEnter(collision);
+
+        // if collides with ennemy 
+        if (collision.gameObject.CompareTag("Ennemy"))
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
