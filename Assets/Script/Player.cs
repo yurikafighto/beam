@@ -18,6 +18,8 @@ public class Player : Entity
 
     Stopwatch stopWatch;
 
+    int score = 0;
+
     // Update is called once per frame
     void Update()
     {
@@ -58,6 +60,9 @@ public class Player : Entity
         {
             
             Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + 1, 0), Quaternion.identity);
+
+            // subscribe to Bullet on hit
+            Bullet.OnHit = OnBulletHit;
             stopWatch.Restart();
         }
 
@@ -90,7 +95,8 @@ public class Player : Entity
 
     private void OnBulletHit()
     {
-        
+        score++;
+        UnityEngine.Debug.Log(score);
     }
 }
 

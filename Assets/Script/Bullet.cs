@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private float m_verticalSpeed, m_horizontalSpeed;
 
+    public static Action OnHit = delegate { };
+
     // Update is called once per frame
     void Update()
     {
@@ -37,15 +39,13 @@ public class Bullet : MonoBehaviour
         m_camera = Camera.main;
     }
 
-    //public event Action<Collision> OnHit;
 
     private void OnCollisionEnter(Collision collision)
     {
-        //OnHit = collision => OnCollisionEnter(collision);
-
         // if collides with ennemy 
         if (collision.gameObject.CompareTag("Ennemy"))
         {
+            OnHit();
             Destroy(gameObject);
         }
     }
