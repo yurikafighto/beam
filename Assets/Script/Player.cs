@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using System.Transactions;
+﻿using System;
+using System.Diagnostics;
 using UnityEngine;
 
 public class Player : Entity
@@ -14,18 +14,20 @@ public class Player : Entity
     // time between projectiles
     private float projectileCD;
     [SerializeField]
-    GameObject bullet;
+    private GameObject bullet;
 
-    Stopwatch stopWatch;
+    private Stopwatch stopWatch;
+    private int score = 0;
+    
 
-    int score = 0;
-
+    public static Action OnHPChange = delegate { };
+    public static Action<int> OnScoreChange = delegate { };
     // Update is called once per frame
     void Update()
     {
         PlayerControl();
     }
-
+    
     private void PlayerControl()
     {
         // set screen position limit
@@ -82,6 +84,7 @@ public class Player : Entity
         if (collision.gameObject.CompareTag("Ennemy"))
         {
             hp -= 10;
+            OnHPChange();
 
             // if no more hp
             if (hp <= 0)
@@ -96,7 +99,20 @@ public class Player : Entity
     private void OnBulletHit()
     {
         score++;
-        UnityEngine.Debug.Log(score);
+        OnScoreChange(score);
     }
+
+    public int GetMaxHP()
+    {
+        return maxHP;
+    }
+
+    public int GetScore()
+    {
+        return score;
+    }
+
+
+
 }
 

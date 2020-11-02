@@ -4,7 +4,7 @@ public class Entity : MonoBehaviour
 {
 
     [SerializeField]
-    private int maxHP;
+    protected int maxHP;
 
     protected int hp;
 
@@ -13,4 +13,6 @@ public class Entity : MonoBehaviour
         // initialise health point
         hp = maxHP;
     }
+
+
 }
