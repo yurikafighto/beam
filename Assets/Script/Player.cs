@@ -20,8 +20,10 @@ public class Player : Entity
     private int score = 0;
     
 
-    public static Action OnHPChange = delegate { };
+    public static Action<int> OnHPChange = delegate { };
     public static Action<int> OnScoreChange = delegate { };
+
+
     // Update is called once per frame
     void Update()
     {
@@ -84,14 +86,14 @@ public class Player : Entity
         if (collision.gameObject.CompareTag("Ennemy"))
         {
             hp -= 10;
-            OnHPChange();
+            // update HP bar
+            OnHPChange(hp);
 
             // if no more hp
             if (hp <= 0)
             {
                 // destroy the player object
                 Destroy(gameObject);
-                
             }
         }
     }
@@ -107,10 +109,6 @@ public class Player : Entity
         return maxHP;
     }
 
-    public int GetScore()
-    {
-        return score;
-    }
 
 
 

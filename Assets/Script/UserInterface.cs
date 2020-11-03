@@ -16,25 +16,39 @@ public class UserInterface : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        int max = player.GetComponent<Player>().GetMaxHP();
+        // initialize HP bar to max HP
+        hpBar.maxValue = max;
+        hpBar.value = max;
+
+    }
+
+
+    private void OnHPChange(int currentHP)
+    {
+        hpBar.value = currentHP;
+        if (currentHP <= 0)
+        {
+            gameOver.SetActive(true);
+            playAgain.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnScoreChange(int currentScore)
+    {
+        score.text = $"SCORE : {currentScore}";
+    }
+
+    private void Awake()
+    {
         // subscribe to Player on score change
         Player.OnScoreChange = OnScoreChange;
         // subscribe to Player on score change
         Player.OnHPChange = OnHPChange;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+
         
-    }
-
-    private void OnHPChange()
-    {
-
-    }
-
-    private void OnScoreChange(int i)
-    {
-        score.text = $"SCORE : {i}";
+        playAgain.onClick.AddListener(GameManager.Instance.ResetLevel);
+        
     }
 }
