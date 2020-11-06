@@ -8,7 +8,7 @@ public class Entity : MonoBehaviour
 
     protected int hp;
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
         // initialise health point
         hp = maxHP;

@@ -19,7 +19,7 @@ public class Player : Entity
     private Stopwatch stopWatch;
     private int score = 0;
     
-
+    // delegate action
     public static Action<int> OnHPChange = delegate { };
     public static Action<int> OnScoreChange = delegate { };
 
@@ -72,7 +72,7 @@ public class Player : Entity
 
 
     }
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         stopWatch = new Stopwatch();

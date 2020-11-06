@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UserInterface : MonoBehaviour 
+public class UserInterface : MonoBehaviourSingleton<UserInterface> 
 {
     [SerializeField]
-    GameObject gameOver, player;
+    GameObject gameOverCanvas, player, pausePanel;
     [SerializeField]
     Button playAgain;
     [SerializeField]
@@ -29,7 +30,10 @@ public class UserInterface : MonoBehaviour
         hpBar.value = currentHP;
         if (currentHP <= 0)
         {
-            gameOver.SetActive(true);
+            
+            Cursor.visible = true;
+            //SceneManager.LoadScene("Game Over");
+            gameOverCanvas.SetActive(true);
             playAgain.gameObject.SetActive(true);
         }
     }
@@ -39,16 +43,21 @@ public class UserInterface : MonoBehaviour
         score.text = $"SCORE : {currentScore}";
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        Cursor.visible = false;
         // subscribe to Player on score change
         Player.OnScoreChange = OnScoreChange;
         // subscribe to Player on score change
         Player.OnHPChange = OnHPChange;
 
-
-        
         playAgain.onClick.AddListener(GameManager.Instance.ResetLevel);
-        
+
     }
+    public void TogglePlayPause(bool pause)
+    {
+        pausePanel.SetActive(pause);
+    }
+
+
 }

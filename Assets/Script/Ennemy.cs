@@ -28,7 +28,7 @@ public class Ennemy : Entity
             Destroy(gameObject); // destroy ennemy
         }
     }
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
         // retrieve the main camera
