@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         Cursor.visible = false;
     }
 
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        Cursor.visible = false;
+    }
     protected override void Awake()
     {
         pauseStatus = false;
