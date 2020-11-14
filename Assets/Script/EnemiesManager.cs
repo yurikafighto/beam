@@ -2,11 +2,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnnemiesManager : MonoBehaviour
+public class EnemiesManager : MonoBehaviour
 {    //This field gets serialized even though it is private
     //because it has the SerializeField attribute applied.
     [SerializeField]
-    private GameObject ennemy, boss;
+    private GameObject enemy, boss;
     [SerializeField]
     private float apparitionCD;
 
@@ -24,28 +24,29 @@ public class EnnemiesManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        coroutine = GenerateEnnemy(apparitionCD);
+        coroutine = GenerateEnemy(apparitionCD);
         StartCoroutine(coroutine);
     }
 
-    private IEnumerator GenerateEnnemy(float waitTime)
+    private IEnumerator GenerateEnemy(float waitTime)
     {
         Vector3 point;
+        float z = m_camera.transform.position.z;
         while (Application.isPlaying && !BossSpawned)
         {
             if (BossStopWatch.ElapsedMilliseconds < 10000)//check si le boss doit spawn
             {
                 yield return new WaitForSeconds(waitTime);
 
-                point = m_camera.ScreenToWorldPoint(new Vector3(Random.Range(0, Screen.width), Screen.height, 10));
-                Instantiate(ennemy, point, Quaternion.identity);
+                point = m_camera.ScreenToWorldPoint(new Vector3(Random.Range(0, Screen.width), Screen.height, z));
+                Instantiate(enemy.transform, point, enemy.transform.rotation);
             }
             else
             {
                 BossSpawned = true;
                 yield return new WaitForSeconds(5);
 
-                point = m_camera.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height+3, 10));
+                point = m_camera.ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height+3, z));
                 Instantiate(boss, point, Quaternion.identity);
             }
         }

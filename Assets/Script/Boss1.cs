@@ -41,7 +41,7 @@ public class Boss1 : Entity
             // if no more hp
             if (hp <= 0)
             {
-                // destroy the ennemy object
+                // destroy the enemy object
                 Destroy(gameObject);
 
             }

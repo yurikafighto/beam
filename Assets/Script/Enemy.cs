@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using UnityEngine;
 
-public class Ennemy : Entity
+public class Enemy : Entity
 {
     //This field gets serialized even though it is private
     //because it has the SerializeField attribute applied.
@@ -21,12 +21,12 @@ public class Ennemy : Entity
         // if not paused
         if (!GameManager.Instance.GetPauseStatus())
         {
-            EnnemyMouvment();
+            EnemyMouvment();
             FireBullet();
         }
     }
 
-    private void EnnemyMouvment()
+    private void EnemyMouvment()
     {
         // set screen position limit
         Vector3 screenPos = m_camera.WorldToScreenPoint(transform.position);
@@ -37,7 +37,7 @@ public class Ennemy : Entity
         //// if out of bottom screen
         if (screenPos.y <= 0)
         {
-            Destroy(gameObject); // destroy ennemy
+            Destroy(gameObject); // destroy enemy
         }
     }
     private void FireBullet()
@@ -67,7 +67,7 @@ public class Ennemy : Entity
         // if collides with the player
         if (collision.gameObject.CompareTag("Player"))
         {
-            // destroy the ennemy object
+            // destroy the enemy object
             Destroy(gameObject);
         }
 
@@ -79,7 +79,7 @@ public class Ennemy : Entity
             // if no more hp
             if (hp <= 0)
             {
-                // destroy the ennemy object
+                // destroy the enemy object
                 Destroy(gameObject);
 
             }
