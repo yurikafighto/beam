@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics;
+using UnityEngine;
 
 public class Ennemy : Entity
 {
@@ -7,11 +8,18 @@ public class Ennemy : Entity
     [SerializeField]
     private float m_verticalSpeed;
     private Camera m_camera;
+    [SerializeField]
+    private float projectileCD;
+    [SerializeField]
+    private GameObject Ebullet;
+
+    private Stopwatch stopWatch;
 
     // Update is called once per frame
     void Update()
     {
         EnnemyMouvment();
+        FireBullet();
     }
 
     private void EnnemyMouvment()
@@ -28,11 +36,26 @@ public class Ennemy : Entity
             Destroy(gameObject); // destroy ennemy
         }
     }
+    private void FireBullet()
+    {
+        if (stopWatch.ElapsedMilliseconds > projectileCD)
+        {
+            Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+
+            // subscribe to Bullet on hit
+            stopWatch.Restart();
+        }
+
+    }
+
     protected override void Awake()
     {
         base.Awake();
         // retrieve the main camera
         m_camera = Camera.main;
+
+        stopWatch = new Stopwatch();
+        stopWatch.Start();
     }
 
     private void OnCollisionEnter(Collision collision)

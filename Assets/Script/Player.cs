@@ -96,6 +96,36 @@ public class Player : Entity
                 Destroy(gameObject);
             }
         }
+
+        if (collision.gameObject.CompareTag("Boss"))
+        {
+            hp -= 1000;
+            // update HP bar
+            OnHPChange(hp);
+
+            // if no more hp
+            if (hp <= 0)
+            {
+                // destroy the player object
+                Destroy(gameObject);
+            }
+        }
+
+        // if collides with ennemy 
+        if (collision.gameObject.CompareTag("EBullet"))
+        {
+            hp -= 5;
+            // update HP bar
+            OnHPChange(hp);
+
+            // if no more hp
+            if (hp <= 0)
+            {
+                // destroy the player object
+                Destroy(gameObject);
+            }
+        }
+
     }
 
     private void OnBulletHit()
