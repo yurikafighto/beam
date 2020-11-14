@@ -18,8 +18,12 @@ public class Ennemy : Entity
     // Update is called once per frame
     void Update()
     {
-        EnnemyMouvment();
-        FireBullet();
+        // if not paused
+        if (!GameManager.Instance.GetPauseStatus())
+        {
+            EnnemyMouvment();
+            FireBullet();
+        }
     }
 
     private void EnnemyMouvment()

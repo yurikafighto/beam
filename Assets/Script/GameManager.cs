@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     {
         pauseStatus = false;
         playerDied = false;
+        Time.timeScale = 1.0f;
     }
 
     public void Play(bool play)
@@ -61,5 +62,10 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     public void BackToMain()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public bool GetPauseStatus()
+    {
+        return pauseStatus;
     }
 }
