@@ -18,7 +18,7 @@ public class TitleScreen : MonoBehaviour
         Breturn.onClick.AddListener(ShowMain);
         Bcontrols.onClick.AddListener(ShowControls);
         Bscores.onClick.AddListener(ShowScores);
-        //Bcredits.onClick.AddListener(GameManager.Instance.nextLevel);
+        Bcredits.onClick.AddListener(ShowCredits);
         Bleave.onClick.AddListener(Application.Quit);
     }
 
@@ -37,6 +37,12 @@ public class TitleScreen : MonoBehaviour
     {
         Main.SetActive(false);
         Scores.SetActive(true);
+        Return.SetActive(true);
+    }
+    private void ShowCredits()
+    {
+        Main.SetActive(false);
+        Credits.SetActive(true);
         Return.SetActive(true);
     }
     private void ShowMain()
