@@ -191,6 +191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 20
   m_verticalSpeed: 3
+  projectileCD: 1000
+  Ebullet: {fileID: 1465490688751951772, guid: 315f1243be805a84588c93cd05483659, type: 3}
 --- !u!54 &-7982681950876042927
 Rigidbody:
   m_ObjectHideFlags: 0
