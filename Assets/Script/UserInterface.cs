@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class UserInterface : MonoBehaviourSingleton<UserInterface> 
 {
     [SerializeField]
-    GameObject gameOverCanvas, player, pausePanel;
+    GameObject gameOver, player, pausePanel, playing;
     [SerializeField]
-    Button playAgain;
+    Button playAgain, resume, mainMenu;
     [SerializeField]
     Text score;
     [SerializeField]
@@ -32,9 +32,9 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         {
             
             Cursor.visible = true;
-            //SceneManager.LoadScene("Game Over");
-            gameOverCanvas.SetActive(true);
-            playAgain.gameObject.SetActive(true);
+            gameOver.SetActive(true);
+            playing.SetActive(false);
+            GameManager.Instance.StopActivity();
         }
     }
 
@@ -52,6 +52,8 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         Player.OnHPChange = OnHPChange;
 
         playAgain.onClick.AddListener(GameManager.Instance.ResetLevel);
+        mainMenu.onClick.AddListener(GameManager.Instance.BackToMain);
+        resume.onClick.AddListener(delegate { GameManager.Instance.Play(true); });
 
     }
     public void TogglePlayPause(bool pause)

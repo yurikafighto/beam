@@ -3,26 +3,27 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourSingleton<GameManager>
 {
-    private bool pauseStatus;
+    private bool pauseStatus, playerDied;
     public void ResetLevel()
     {
-        //string sceneName = PlayerPrefs.GetString("lastLoadedScene");
-        //SceneManager.LoadScene(sceneName);//back to previous scene
-
         // re load current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Cursor.visible = false;
+        Time.timeScale = 1.0f;
+        playerDied = false;
+
     }
 
     protected override void Awake()
     {
         pauseStatus = false;
+        playerDied = false;
     }
 
-    public void Play (bool play)
+    public void Play(bool play)
     {
         pauseStatus = !play;
-        
+
         UserInterface.Instance.TogglePlayPause(pauseStatus);
         if (pauseStatus)
         {
@@ -32,17 +33,28 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         {
             Time.timeScale = 1.0f;
         }
-            
+
     }
 
     private void Update()
     {
         // move backward
-        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
+        if ((Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape)) && !playerDied)
         {
             Play(pauseStatus);
         }
     }
 
+    // stop activity
+    public void StopActivity()
+    {
+        Time.timeScale = 0.0f;
+        playerDied = true;
+    }
 
+    // load Main menu
+    public void BackToMain()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
