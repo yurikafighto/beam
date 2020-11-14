@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Entity
 {
@@ -12,11 +13,14 @@ public class Player : Entity
     private float m_verticalSpeed, m_horizontalSpeed;
     [SerializeField]
     // time between projectiles
-    private float projectileCD;
+    private float projectileCD, spellCD1;
     [SerializeField]
     private GameObject bullet;
+    [SerializeField]
+    private Image CDcover;
 
-    private Stopwatch stopWatch;
+    private Stopwatch stopWatchBullet;
+    private Stopwatch stopSpell1;
     private int score = 0;
     
     // delegate action
@@ -31,6 +35,7 @@ public class Player : Entity
         if (!GameManager.Instance.GetPauseStatus())
         {
             PlayerControl();
+            CDmanager();
         }            
     }
     
@@ -64,23 +69,32 @@ public class Player : Entity
         }
 
         // fire bullet
-        if (Input.GetKey(KeyCode.Space) && stopWatch.ElapsedMilliseconds > projectileCD)
+        if (Input.GetKey(KeyCode.Space) && stopWatchBullet.ElapsedMilliseconds > projectileCD)
         {
             
             Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + 1, 0), Quaternion.identity);
 
             // subscribe to Bullet on hit
             Bullet.OnHit = OnBulletHit;
-            stopWatch.Restart();
+            stopWatchBullet.Restart();
         }
-
+        if (Input.GetKey(KeyCode.C) && stopSpell1.ElapsedMilliseconds > spellCD1)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + (i/2), 0), Quaternion.identity);
+            }
+            stopSpell1.Restart();
+        }
 
     }
     protected override void Awake()
     {
         base.Awake();
-        stopWatch = new Stopwatch();
-        stopWatch.Start();
+        stopWatchBullet = new Stopwatch();
+        stopWatchBullet.Start();
+        stopSpell1 = new Stopwatch();
+        stopSpell1.Start();
 
     }
 
@@ -143,7 +157,10 @@ public class Player : Entity
         return maxHP;
     }
 
-
+    public void CDmanager()
+    {
+        CDcover.GetComponent<Image>().fillAmount = 1-(stopSpell1.ElapsedMilliseconds / spellCD1);
+    }
 
 
 }
