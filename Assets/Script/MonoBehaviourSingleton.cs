@@ -34,7 +34,6 @@ public class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviour
         if (m_Instance == null)
         {
             m_Instance = this as T;
-            DontDestroyOnLoad(gameObject);
         }
         else if (m_Instance != this)
             DestroySelf();

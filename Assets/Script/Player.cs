@@ -27,8 +27,8 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
-        // if not paused
-        if (!GameManager.Instance.GetPauseStatus())
+        // if not paused nor died
+        if (!GameManager.Instance.GetPauseStatus() && !GameManager.Instance.IsDead())
         {
             PlayerControl();
         }            

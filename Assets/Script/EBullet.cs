@@ -35,7 +35,7 @@ public class EBullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if collides with ennemy 
+        // if collides with enemy 
         if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);

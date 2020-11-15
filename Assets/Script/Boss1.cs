@@ -9,7 +9,11 @@ public class Boss1 : Entity
 
     void Update()
     {
-        BossAppear();
+        // if not paused nor died
+        if (!GameManager.Instance.GetPauseStatus() && !GameManager.Instance.IsDead())
+        {
+            BossAppear();
+        }
     }
 
     private void BossAppear()

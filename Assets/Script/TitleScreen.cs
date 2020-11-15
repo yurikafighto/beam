@@ -22,10 +22,6 @@ public class TitleScreen : MonoBehaviour
         Bleave.onClick.AddListener(Application.Quit);
     }
 
-    private void test()
-    {
-        Debug.Log("aa");
-    }
     private void ShowControls()
     {
         Main.SetActive(false);

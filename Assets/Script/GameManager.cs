@@ -68,4 +68,9 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
     {
         return pauseStatus;
     }
+
+    public bool IsDead()
+    {
+        return playerDied;
+    }
 }
