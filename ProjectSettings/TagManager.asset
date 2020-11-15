@@ -4,8 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ennemy
   - Bullet
+  - Boss
+  - EBullet
+  - Enemy
+  - Ennemy
   layers:
   - Default
   - TransparentFX

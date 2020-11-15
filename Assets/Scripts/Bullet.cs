@@ -42,8 +42,8 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if collides with ennemy 
-        if (collision.gameObject.CompareTag("Ennemy"))
+        // if collides with enemy 
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss") )
         {
             OnHit();
             Destroy(gameObject);

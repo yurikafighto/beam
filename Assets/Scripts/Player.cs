@@ -27,7 +27,11 @@ public class Player : Entity
     // Update is called once per frame
     void Update()
     {
-        PlayerControl();
+        // if not paused nor died
+        if (!GameManager.Instance.GetPauseStatus() && !GameManager.Instance.IsDead())
+        {
+            PlayerControl();
+        }            
     }
     
     private void PlayerControl()
@@ -82,8 +86,8 @@ public class Player : Entity
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if collides with ennemy 
-        if (collision.gameObject.CompareTag("Ennemy"))
+        // if collides with enemy 
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             hp -= 10;
             // update HP bar
@@ -96,6 +100,36 @@ public class Player : Entity
                 Destroy(gameObject);
             }
         }
+
+        if (collision.gameObject.CompareTag("Boss"))
+        {
+            hp -= 1000;
+            // update HP bar
+            OnHPChange(hp);
+
+            // if no more hp
+            if (hp <= 0)
+            {
+                // destroy the player object
+                Destroy(gameObject);
+            }
+        }
+
+        // if collides with enemy 
+        if (collision.gameObject.CompareTag("EBullet"))
+        {
+            hp -= 5;
+            // update HP bar
+            OnHPChange(hp);
+
+            // if no more hp
+            if (hp <= 0)
+            {
+                // destroy the player object
+                Destroy(gameObject);
+            }
+        }
+
     }
 
     private void OnBulletHit()

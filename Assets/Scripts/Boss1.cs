@@ -1,31 +1,30 @@
 ﻿using UnityEngine;
 
-public class Ennemy : Entity
+public class Boss1 : Entity
 {
-    //This field gets serialized even though it is private
-    //because it has the SerializeField attribute applied.
     [SerializeField]
     private float m_verticalSpeed;
     private Camera m_camera;
 
-    // Update is called once per frame
+
     void Update()
     {
-        EnnemyMouvment();
+        // if not paused nor died
+        if (!GameManager.Instance.GetPauseStatus() && !GameManager.Instance.IsDead())
+        {
+            BossAppear();
+        }
     }
 
-    private void EnnemyMouvment()
+    private void BossAppear()
     {
         // set screen position limit
         Vector3 screenPos = m_camera.WorldToScreenPoint(transform.position);
 
-        // move to the bottom
-        transform.position = new Vector3(transform.position.x, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
-
-        //// if out of bottom screen
-        if (screenPos.y <= 0)
+        // move to the bottom until its at the desired place
+        if (transform.position.y >= 2.5)
         {
-            Destroy(gameObject); // destroy ennemy
+            transform.position = new Vector3(transform.position.x, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
         }
     }
     protected override void Awake()
@@ -37,12 +36,6 @@ public class Ennemy : Entity
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if collides with the player
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            // destroy the ennemy object
-            Destroy(gameObject);
-        }
 
         // if collides with bullet
         if (collision.gameObject.CompareTag("Bullet"))
@@ -52,12 +45,10 @@ public class Ennemy : Entity
             // if no more hp
             if (hp <= 0)
             {
-                // destroy the ennemy object
+                // destroy the enemy object
                 Destroy(gameObject);
 
             }
         }
     }
-
-
 }
