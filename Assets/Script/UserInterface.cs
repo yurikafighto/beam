@@ -51,6 +51,11 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         }
     }
 
+    private void OnBossAppear()
+    {
+        hpBoss.gameObject.SetActive(true);
+    }
+
     private void OnScoreChange(int currentScore)
     {
         score.text = $"SCORE : {currentScore}";
@@ -64,6 +69,8 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         // subscribe to Player on score change
         Player.OnHPChange = OnHPChange;
         Boss1.OnBossHPChange = OnBossHPChange;
+
+        Boss1.OnBossAppear = OnBossAppear;
 
         playAgain.onClick.AddListener(GameManager.Instance.ResetLevel);
         mainMenu.onClick.AddListener(GameManager.Instance.BackToMain);

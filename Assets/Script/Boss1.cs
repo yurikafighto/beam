@@ -8,6 +8,7 @@ public class Boss1 : Entity
     private Camera m_camera;
 
     public static Action<int> OnBossHPChange = delegate { };
+    public static Action OnBossAppear = delegate { };
 
     void Update()
     {
@@ -30,6 +31,7 @@ public class Boss1 : Entity
         base.Awake();
         // retrieve the main camera
         m_camera = Camera.main;
+        OnBossAppear();
     }
 
     private void OnCollisionEnter(Collision collision)
