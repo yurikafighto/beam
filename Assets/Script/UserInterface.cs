@@ -5,23 +5,25 @@ using UnityEngine.UI;
 public class UserInterface : MonoBehaviourSingleton<UserInterface> 
 {
     [SerializeField]
-    GameObject gameOver, player, pausePanel, playing;
+    GameObject gameOver, win, player, boss, pausePanel, playing;
     [SerializeField]
     Button playAgain, resume, mainMenu;
     [SerializeField]
     Text score;
     [SerializeField]
-    Slider hpBar;
+    Slider hpBar, hpBoss;
 
 
     // Start is called before the first frame update
     void Start()
     {
         int max = player.GetComponent<Player>().GetMaxHP();
-        // initialize HP bar to max HP
+        int maxBoss = boss.GetComponent<Boss1>().GetMaxHP();
+        // initialize HP bars to max HP
         hpBar.maxValue = max;
         hpBar.value = max;
-
+        hpBoss.maxValue = maxBoss;
+        hpBoss.value = maxBoss;
     }
 
 
@@ -38,6 +40,22 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         }
     }
 
+    private void OnBossHPChange(int currentHP)
+    {
+        hpBoss.value = currentHP;
+        if (currentHP <= 0)
+        {
+            Cursor.visible = true;
+            win.SetActive(true);
+            playing.SetActive(false);
+        }
+    }
+
+    private void OnBossAppear()
+    {
+        hpBoss.gameObject.SetActive(true);
+    }
+
     private void OnScoreChange(int currentScore)
     {
         score.text = $"SCORE : {currentScore}";
@@ -50,6 +68,9 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         Player.OnScoreChange = OnScoreChange;
         // subscribe to Player on score change
         Player.OnHPChange = OnHPChange;
+        Boss1.OnBossHPChange = OnBossHPChange;
+
+        Boss1.OnBossAppear = OnBossAppear;
 
         playAgain.onClick.AddListener(GameManager.Instance.ResetLevel);
         mainMenu.onClick.AddListener(GameManager.Instance.BackToMain);

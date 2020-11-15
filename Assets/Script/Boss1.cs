@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Boss1 : Entity
 {
@@ -6,6 +7,8 @@ public class Boss1 : Entity
     private float m_verticalSpeed;
     private Camera m_camera;
 
+    public static Action<int> OnBossHPChange = delegate { };
+    public static Action OnBossAppear = delegate { };
 
     void Update()
     {
@@ -32,6 +35,7 @@ public class Boss1 : Entity
         base.Awake();
         // retrieve the main camera
         m_camera = Camera.main;
+        OnBossAppear();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -41,6 +45,7 @@ public class Boss1 : Entity
         if (collision.gameObject.CompareTag("Bullet"))
         {
             hp -= 10;
+            OnBossHPChange(hp);
 
             // if no more hp
             if (hp <= 0)
@@ -50,5 +55,10 @@ public class Boss1 : Entity
 
             }
         }
+    }
+
+    public int GetMaxHP()
+    {
+        return maxHP;
     }
 }
