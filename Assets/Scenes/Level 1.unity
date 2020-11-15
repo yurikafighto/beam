@@ -3018,18 +3018,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - name: "premi\xE8re"
-    enemy: {fileID: 5834220349612492750, guid: 57dd8feb28e16e94fb4cd5abab4bc12b, type: 3}
-    count: 3
-    rate: 1
-    isBoss: 0
-  - name: "deuxi\xE8eme"
-    enemy: {fileID: 2321704820800975822, guid: e461741ca8588c947bf6c27fe01623e6, type: 3}
-    count: 1
-    rate: 1
-    isBoss: 1
-  timeBetweenWaves: 2
-  waveCountdown: 0
+  - wavename: mob vague
+    enemiesGroup:
+    - groupName: wncdown
+      enemy: {fileID: 5834220349612492750, guid: 57dd8feb28e16e94fb4cd5abab4bc12b,
+        type: 3}
+      count: 5
+      enemyFormation: 1
+    - groupName: arcup
+      enemy: {fileID: 5834220349612492750, guid: 57dd8feb28e16e94fb4cd5abab4bc12b,
+        type: 3}
+      count: 7
+      enemyFormation: 0
+    - groupName: random
+      enemy: {fileID: 5834220349612492750, guid: 57dd8feb28e16e94fb4cd5abab4bc12b,
+        type: 3}
+      count: 6
+      enemyFormation: 3
+    timeBetweenGroups: 5
+  - wavename: boss vague
+    enemiesGroup:
+    - groupName: Boss
+      enemy: {fileID: 2321704820800975822, guid: e461741ca8588c947bf6c27fe01623e6,
+        type: 3}
+      count: 1
+      enemyFormation: 2
+    timeBetweenGroups: 0
+  timeBetweenWaves: 5
+  waveCountdown: 5.88
 --- !u!4 &2020930566
 Transform:
   m_ObjectHideFlags: 0
