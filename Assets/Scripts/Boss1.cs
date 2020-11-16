@@ -2,12 +2,12 @@
 using System;
 using UnityEngine;
 
-public class Boss1 : Entity
+public class Boss1 : Boss
 {
     private Camera m_camera;
     [SerializeField]
     private GameObject Ebullet, EWarningBullet;
-    private float m_horizontalSpeed=0, m_verticalSpeed=2, ProjectileCD = 1000, LaserCD = 5000, LaserChargeTime = 2000;
+    private float m_horizontalSpeed=0, m_verticalSpeed=2, ProjectileCD = 700, LaserCD = 4000, LaserChargeTime = 1300;
     private bool LaserCharging = false, moveRight = false;
     private int rand, rand2, rand3;
     private int BulletFired = 1;
@@ -16,8 +16,6 @@ public class Boss1 : Entity
     private Stopwatch LaserCDWatch;
     private Stopwatch LaserWatch;
 
-    public static Action<int> OnBossHPChange = delegate { };
-    public static Action<bool> OnBossAppear = delegate { };
 
     void Update()
     {
@@ -43,15 +41,18 @@ public class Boss1 : Entity
             m_verticalSpeed = 0;
         }
 
+        if (!LaserCharging) //Boss stops moving when it charges laser
+        {
+            if (moveRight)
+            {
+                transform.position = new Vector3(transform.position.x + m_horizontalSpeed * Time.deltaTime, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
+            }
+            else
+            {
+                transform.position = new Vector3(transform.position.x - m_horizontalSpeed * Time.deltaTime, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
+            }
+        }
         //moves left and right
-        if (moveRight)
-        {
-            transform.position = new Vector3(transform.position.x + m_horizontalSpeed * Time.deltaTime, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
-        }
-        else
-        {
-            transform.position = new Vector3(transform.position.x - m_horizontalSpeed * Time.deltaTime, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
-        }
 
         if (transform.position.x >= 3 && moveRight)
         {
@@ -70,9 +71,9 @@ public class Boss1 : Entity
         {
             for (int i = 0; i < BulletFired; i++)
             {
-                rand = UnityEngine.Random.Range(-20, 20);
+                rand = UnityEngine.Random.Range(-50, 50);
                 GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-                tmp.GetComponent<EBullet>().SetSpeed(rand, 7);
+                tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand) * Mathf.Deg2Rad), Mathf.Sin((270 + rand) * Mathf.Deg2Rad),7);
                 BulletCDWatch.Restart();
             }
         }
@@ -85,27 +86,30 @@ public class Boss1 : Entity
             if (!LaserCharging)
             {
                 LaserCharging = true;
-                rand = UnityEngine.Random.Range(-20, 20);
-                rand2 = UnityEngine.Random.Range(-20, 20);
-                rand3 = UnityEngine.Random.Range(-20, 20);
-                GameObject tmp = Instantiate(EWarningBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-                tmp.GetComponent<EBullet>().SetSpeed(rand, 20);
-                GameObject tmp2 = Instantiate(EWarningBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-                tmp2.GetComponent<EBullet>().SetSpeed(rand2, 20);
-                GameObject tmp3 = Instantiate(EWarningBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-                tmp3.GetComponent<EBullet>().SetSpeed(rand3, 20);
+                rand = UnityEngine.Random.Range(-50, 50);
+                rand2 = UnityEngine.Random.Range(-50, 50);
+                rand3 = UnityEngine.Random.Range(-50, 50);
+                for (int i = 0; i < 7; i++)
+                {
+                    GameObject tmp = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand) * Mathf.Deg2Rad) * i, 0), Quaternion.identity);
+                    tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand) * Mathf.Deg2Rad), Mathf.Sin((270 + rand) * Mathf.Deg2Rad), 10);
+                    GameObject tmp2 = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand2) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand2) * Mathf.Deg2Rad) * i, 0), Quaternion.identity);
+                    tmp2.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand2) * Mathf.Deg2Rad), Mathf.Sin((270 + rand2) * Mathf.Deg2Rad), 10);
+                    GameObject tmp3 = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand3) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand3) * Mathf.Deg2Rad) * i, 0), Quaternion.identity);
+                    tmp3.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand3) * Mathf.Deg2Rad), Mathf.Sin((270 + rand3) * Mathf.Deg2Rad), 10);
+                }
                 LaserWatch.Restart();
             }
             if (LaserWatch.ElapsedMilliseconds > LaserChargeTime)
             {
                 for (int i = 0; i < 30; i++)
                 {
-                    GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x + (0.01f * rand * i), transform.position.y - (i * 0.2f), 0), Quaternion.identity);
-                    tmp.GetComponent<EBullet>().SetSpeed(rand, 20);
-                    GameObject tmp2 = Instantiate(Ebullet, new Vector3(transform.position.x + (0.01f * rand2 * i), transform.position.y - (i * 0.2f), 0), Quaternion.identity);
-                    tmp2.GetComponent<EBullet>().SetSpeed(rand2, 20);
-                    GameObject tmp3 = Instantiate(Ebullet, new Vector3(transform.position.x + (0.01f * rand3 * i), transform.position.y - (i * 0.2f), 0), Quaternion.identity);
-                    tmp3.GetComponent<EBullet>().SetSpeed(rand3, 20);
+                    GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand) * Mathf.Deg2Rad)*i/4, transform.position.y + Mathf.Sin((270 + rand) * Mathf.Deg2Rad)*i/4, 0), Quaternion.identity);
+                    tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand) * Mathf.Deg2Rad), Mathf.Sin((270 + rand) * Mathf.Deg2Rad), 20);
+                    GameObject tmp2 = Instantiate(Ebullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand2) * Mathf.Deg2Rad) * i/4, transform.position.y + Mathf.Sin((270 + rand2) * Mathf.Deg2Rad) * i/4, 0), Quaternion.identity);
+                    tmp2.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand2) * Mathf.Deg2Rad), Mathf.Sin((270 + rand2) * Mathf.Deg2Rad), 20);
+                    GameObject tmp3 = Instantiate(Ebullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand3) * Mathf.Deg2Rad) * i/4, transform.position.y + Mathf.Sin((270 + rand3) * Mathf.Deg2Rad) * i/4, 0), Quaternion.identity);
+                    tmp3.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand3) * Mathf.Deg2Rad), Mathf.Sin((270 + rand3) * Mathf.Deg2Rad), 20);
                 }
                 LaserCharging = false;
                 LaserCDWatch.Restart();
@@ -117,21 +121,21 @@ public class Boss1 : Entity
 
     private void CheckState()
     {
-        if (hp < maxHP * 0.66 && BulletFired == 1) //check if the boss gets to second phase and if it isnt already
+        if (hp < maxHP * 0.70 && BulletFired == 1) //check if the boss gets to second phase and if it isnt already
         {
             BulletFired = 2;
-            ProjectileCD = 750;
-            LaserCD = 4000;
-            LaserChargeTime = 2000;
-            m_horizontalSpeed = 1;
+            ProjectileCD = 600;
+            LaserCD = 3500;
+            LaserChargeTime = 1000;
+            m_horizontalSpeed = 2;
         }
-        if (hp < maxHP * 0.33 && BulletFired == 2) //check if the boss gets to second phase and if it isnt already
+        if (hp < maxHP * 0.35 && BulletFired == 2) //check if the boss gets to second phase and if it isnt already
         {
             BulletFired = 3;
             ProjectileCD = 500;
-            LaserCD = 3000;
-            LaserChargeTime = 1000;
-            m_horizontalSpeed = 3;
+            LaserCD = 2500;
+            LaserChargeTime = 700;
+            m_horizontalSpeed = 4;
         }
     }
 
@@ -168,8 +172,4 @@ public class Boss1 : Entity
         }
     }
 
-    public int GetMaxHP()
-    {
-        return maxHP;
-    }
 }

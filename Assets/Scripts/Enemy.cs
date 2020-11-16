@@ -45,7 +45,7 @@ public class Enemy : Entity
         if (stopWatch.ElapsedMilliseconds > projectileCD)
         {
             GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-            tmp.GetComponent<EBullet>().SetSpeed(0,10);
+            tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos(270 * Mathf.Deg2Rad), Mathf.Sin(270 * Mathf.Deg2Rad),10);
             // subscribe to Bullet on hit
             stopWatch.Restart();
         }

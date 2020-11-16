@@ -78,7 +78,6 @@ public class Player : Entity
         {
             
             Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + 1, 0), Quaternion.identity);
-
             // subscribe to Bullet on hit
             Bullet.OnHit = OnBulletHit;
             stopWatchBullet.Restart();
