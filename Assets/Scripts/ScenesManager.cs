@@ -47,7 +47,11 @@ public class ScenesManager : EditorWindow
     {
         UnityEngine.Object selectedObject = Selection.activeObject;
 
-        return selectedObject.GetType() == typeof(SceneAsset);
+        if(selectedObject != null)
+        {
+            return selectedObject.GetType() == typeof(SceneAsset);
+        }
+        return false;
     }
 
     private void OnGUI()
