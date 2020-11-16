@@ -17,7 +17,7 @@ public class EBullet : MonoBehaviour
         Vector3 screenPos = m_camera.WorldToScreenPoint(transform.position);
 
         // move forward
-        transform.position = new Vector3(transform.position.x + m_horizontalSpeed, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
+        transform.position = new Vector3(transform.position.x + m_horizontalSpeed * Time.deltaTime, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
 
         // if out of screen
         
@@ -40,5 +40,10 @@ public class EBullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    public void SetSpeed(float horizontal, float vertical)
+    {
+        m_horizontalSpeed = horizontal;
+        m_verticalSpeed = vertical;
     }
 }

@@ -51,9 +51,9 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         }
     }
 
-    private void OnBossAppear()
+    private void OnBossAppear(bool b)
     {
-        hpBoss.gameObject.SetActive(true);
+        hpBoss.gameObject.SetActive(b);
     }
 
     private void OnScoreChange(int currentScore)

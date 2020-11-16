@@ -6,7 +6,7 @@ public class Enemy : Entity
     //This field gets serialized even though it is private
     //because it has the SerializeField attribute applied.
     [SerializeField]
-    private float m_verticalSpeed;
+    private float m_verticalSpeed, m_horizontalSpeed;
     private Camera m_camera;
     [SerializeField]
     private float projectileCD;
@@ -32,7 +32,7 @@ public class Enemy : Entity
         Vector3 screenPos = m_camera.WorldToScreenPoint(transform.position);
 
         // move to the bottom
-        transform.position = new Vector3(transform.position.x, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
+        transform.position = new Vector3(transform.position.x+ m_horizontalSpeed * Time.deltaTime, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
 
         //// if out of bottom screen
         if (screenPos.y <= 0)
@@ -44,8 +44,8 @@ public class Enemy : Entity
     {
         if (stopWatch.ElapsedMilliseconds > projectileCD)
         {
-            Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-
+            GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+            tmp.GetComponent<EBullet>().SetSpeed(0,10);
             // subscribe to Bullet on hit
             stopWatch.Restart();
         }
