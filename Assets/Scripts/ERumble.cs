@@ -89,6 +89,7 @@ public class ERumble : Entity
         {
             // destroy the enemy object
             Destroy(gameObject);
+            ScoreEnemy(250);
 
         }
     }

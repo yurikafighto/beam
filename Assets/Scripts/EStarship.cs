@@ -86,6 +86,7 @@ public class EStarship : Entity
         {
             // destroy the enemy object
             Destroy(gameObject);
+            ScoreEnemy(150);
 
         }
     }

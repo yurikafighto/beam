@@ -74,8 +74,19 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
 
     private void OnScoreChange(int playerScore)
     {
+        //currentScore = playerScore;
+        //score.text = $"SCORE : {currentScore}";
+
         currentScore = playerScore;
-        score.text = $"SCORE : {currentScore}";
+
+        int tmp = playerScore;
+        string tmpString = "";
+        while (tmp < 100000)
+        {
+            tmpString += "0";
+            tmp = tmp * 10;
+        }
+        score.text = tmpString+playerScore;
     }
 
     protected override void Awake()

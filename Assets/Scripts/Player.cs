@@ -38,7 +38,6 @@ public class Player : Entity
             CDmanager();
             if (barrier.activeSelf && stopShield.ElapsedMilliseconds>2000)
             {
-                UnityEngine.Debug.Log("a");
                 barrier.SetActive(false);
             }
         }            
@@ -107,8 +106,23 @@ public class Player : Entity
         }
 
     }
+
+    private new void ScoreEnemy(int points)
+    {
+        score += points;
+        OnScoreChange(score);
+    }
+    private void ScoreBoss()
+    {
+        score += hp*100;
+        UnityEngine.Debug.Log(hp * 100);
+        OnScoreChange(score);
+    }
+
     protected override void Awake()
     {
+        Boss.ScoreBoss = ScoreBoss;
+        Entity.ScoreEnemy = ScoreEnemy;
         base.Awake();
         stopWatchBullet = new Stopwatch();
         stopWatchBullet.Start();
@@ -162,7 +176,7 @@ public class Player : Entity
 
     private void OnBulletHit()
     {
-        score++;
+        score += 10;
         OnScoreChange(score);
     }
 

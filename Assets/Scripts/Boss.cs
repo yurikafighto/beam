@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class Boss : Entity
 {
@@ -18,5 +15,6 @@ public class Boss : Entity
 
     public static Action<int> OnBossHPChange = delegate { };
     public static Action<bool> OnBossAppear = delegate { };
+    public static Action ScoreBoss = delegate { };
 
 }

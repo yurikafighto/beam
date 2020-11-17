@@ -86,7 +86,7 @@ public class EUrgot : Entity
         {
             // destroy the enemy object
             Destroy(gameObject);
-
+            ScoreEnemy(500);
         }
     }
 

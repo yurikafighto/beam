@@ -175,6 +175,7 @@ public class Boss1 : Boss
         {
             // destroy the enemy object
             Destroy(gameObject);
+            ScoreBoss();
             OnBossAppear(false);
         }
     }
