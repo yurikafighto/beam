@@ -8,10 +8,6 @@ public class Enemy : Entity
     [SerializeField]
     private float m_verticalSpeed, m_horizontalSpeed;
     private Camera m_camera;
-    [SerializeField]
-    private float projectileCD;
-    [SerializeField]
-    private GameObject Ebullet;
 
     private Stopwatch stopWatch;
 
@@ -22,7 +18,6 @@ public class Enemy : Entity
         if (!GameManager.Instance.GetPauseStatus() && !GameManager.Instance.IsDead())
         {
             EnemyMouvment();
-            FireBullet();
         }
     }
 
@@ -39,17 +34,6 @@ public class Enemy : Entity
         {
             Destroy(gameObject); // destroy enemy
         }
-    }
-    private void FireBullet()
-    {
-        if (stopWatch.ElapsedMilliseconds > projectileCD)
-        {
-            GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-            tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos(270 * Mathf.Deg2Rad), Mathf.Sin(270 * Mathf.Deg2Rad),10);
-            // subscribe to Bullet on hit
-            stopWatch.Restart();
-        }
-
     }
 
     protected override void Awake()

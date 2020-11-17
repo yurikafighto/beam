@@ -1994,7 +1994,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1061667996
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3866,7 +3866,27 @@ MonoBehaviour:
         type: 3}
       count: 5
       enemyFormation: 1
-    timeBetweenGroups: 0
+    - groupName: wncdown
+      enemy: {fileID: 4205650284403329596, guid: 9d493f6a82c5679408fe98c0d2645cc8,
+        type: 3}
+      count: 4
+      enemyFormation: 1
+    - groupName: wncdown
+      enemy: {fileID: 6210517545869608445, guid: e8256a818b267ee4f9ab213974a6eebb,
+        type: 3}
+      count: 5
+      enemyFormation: 1
+    - groupName: wncdown
+      enemy: {fileID: 7162140773003737326, guid: e4b9bcf8f32393e489c063029c6705a2,
+        type: 3}
+      count: 2
+      enemyFormation: 1
+    - groupName: wncdown
+      enemy: {fileID: 988712276968407568, guid: cbc3d6a93f1c4ee4e8d848241f49061d,
+        type: 3}
+      count: 3
+      enemyFormation: 1
+    timeBetweenGroups: 5
   - wavename: boss vague
     enemiesGroup:
     - groupName: Boss
@@ -3874,7 +3894,7 @@ MonoBehaviour:
         type: 3}
       count: 1
       enemyFormation: 2
-    timeBetweenGroups: 0
+    timeBetweenGroups: 5
   timeBetweenWaves: 1
   waveCountdown: 5.88
 --- !u!4 &2020930566
