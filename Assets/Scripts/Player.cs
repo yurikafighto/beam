@@ -124,10 +124,9 @@ public class Player : Entity
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if collides with enemy 
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Boss"))
         {
-            hp -= 10;
+            hp -= 1000;
             // update HP bar
             OnHPChange(hp);
 
@@ -139,9 +138,25 @@ public class Player : Entity
             }
         }
 
-        if (collision.gameObject.CompareTag("Boss"))
+        // if collides with enemy 
+        if (collision.gameObject.CompareTag("EBullet20"))
         {
-            hp -= 1000;
+            hp -= 20;
+            // update HP bar
+            OnHPChange(hp);
+
+            // if no more hp
+            if (hp <= 0)
+            {
+                // destroy the player object
+                Destroy(gameObject);
+            }
+        }
+
+        // if collides with enemy 
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EBullet10"))
+        {
+            hp -= 10;
             // update HP bar
             OnHPChange(hp);
 

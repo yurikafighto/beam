@@ -8,7 +8,7 @@ public class Boss3 : Boss
 {
     private Camera m_camera;
     [SerializeField]
-    private GameObject Ebullet, Eshield, Barrier;
+    private GameObject EVoidBullet, Eshield, Barrier;
     private float m_horizontalSpeed = 0, m_verticalSpeed = 2, ProjectileCD = 200;
     private bool aimRight = true;
     private int rand;
@@ -55,7 +55,7 @@ public class Boss3 : Boss
                 rand = UnityEngine.Random.Range(-50, 50);
                 for (int i = 0; i < BulletFired; i++)
                 {
-                    GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                    GameObject tmp = Instantiate(EVoidBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                     tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand - (15) * (i - 2)) * Mathf.Deg2Rad), Mathf.Sin((270 + rand - (15)) * Mathf.Deg2Rad), 4);
                 }
                 BulletCDWatch.Restart();
@@ -63,13 +63,13 @@ public class Boss3 : Boss
             else if (ShieldsActive > 0)
             {
                 rand = UnityEngine.Random.Range(-100, -80);
-                GameObject tmp2 = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                GameObject tmp2 = Instantiate(EVoidBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                 tmp2.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand + aim) * Mathf.Deg2Rad), Mathf.Sin((270 + rand + aim) * Mathf.Deg2Rad), 7);
                 rand = UnityEngine.Random.Range(-10, 10);
-                GameObject tmp3 = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                GameObject tmp3 = Instantiate(EVoidBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                 tmp3.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand + aim) * Mathf.Deg2Rad), Mathf.Sin((270 + rand + aim) * Mathf.Deg2Rad), 7);
                 rand = UnityEngine.Random.Range(80, 100);
-                GameObject tmp4 = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                GameObject tmp4 = Instantiate(EVoidBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                 tmp4.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand + aim) * Mathf.Deg2Rad), Mathf.Sin((270 + rand + aim) * Mathf.Deg2Rad), 7);
                 if (aimRight)//rotate the direction the boss is aiming
                 {
@@ -94,7 +94,7 @@ public class Boss3 : Boss
 
     private void SummonShields(float dx, float dy)
     {
-        GameObject tmp = Instantiate(Eshield, new Vector3(transform.position.x + dx, transform.position.y + dy, 0), Quaternion.Euler(0, 0, 45));
+        GameObject tmp = Instantiate(Eshield, new Vector3(transform.position.x + dx, transform.position.y + dy, 0), transform.rotation);
         if (ShieldsActive == 0)
         {
             Barrier.SetActive(true);

@@ -108,7 +108,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 1000
-  Ebullet: {fileID: 1465490688751951772, guid: 315f1243be805a84588c93cd05483659, type: 3}
+  EVoidBullet: {fileID: 2401327464032980377, guid: 07fb6b1de3df0ec4f9e1aa99147a1254,
+    type: 3}
+  ELaserBullet: {fileID: 3740217403123891987, guid: 25b2157d282c82544afb70b39faababe,
+    type: 3}
   EWarningBullet: {fileID: 1163073965742437861, guid: 9f718f878ce1c4a4ab71374b6ce4c139,
     type: 3}
 --- !u!1 &6012728642437864506

@@ -6,7 +6,7 @@ public class Boss1 : Boss
 {
     private Camera m_camera;
     [SerializeField]
-    private GameObject Ebullet, EWarningBullet;
+    private GameObject EVoidBullet, ELaserBullet, EWarningBullet;
     private float m_horizontalSpeed=0, m_verticalSpeed=2, ProjectileCD = 700, LaserCD = 4000, LaserChargeTime = 1300;
     private bool LaserCharging = false, moveRight = false;
     private int rand, rand2, rand3;
@@ -72,7 +72,7 @@ public class Boss1 : Boss
             for (int i = 0; i < BulletFired; i++)
             {
                 rand = UnityEngine.Random.Range(-50, 50);
-                GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                GameObject tmp = Instantiate(EVoidBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                 tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand) * Mathf.Deg2Rad), Mathf.Sin((270 + rand) * Mathf.Deg2Rad),7);
                 BulletCDWatch.Restart();
             }
@@ -104,11 +104,11 @@ public class Boss1 : Boss
             {
                 for (int i = 0; i < 30; i++)
                 {
-                    GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand) * Mathf.Deg2Rad)*i/4, transform.position.y + Mathf.Sin((270 + rand) * Mathf.Deg2Rad)*i/4, 0), Quaternion.identity);
+                    GameObject tmp = Instantiate(ELaserBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand) * Mathf.Deg2Rad)*i/4, transform.position.y + Mathf.Sin((270 + rand) * Mathf.Deg2Rad)*i/4, 0), Quaternion.Euler(0, 0, (rand)));
                     tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand) * Mathf.Deg2Rad), Mathf.Sin((270 + rand) * Mathf.Deg2Rad), 20);
-                    GameObject tmp2 = Instantiate(Ebullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand2) * Mathf.Deg2Rad) * i/4, transform.position.y + Mathf.Sin((270 + rand2) * Mathf.Deg2Rad) * i/4, 0), Quaternion.identity);
+                    GameObject tmp2 = Instantiate(ELaserBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand2) * Mathf.Deg2Rad) * i/4, transform.position.y + Mathf.Sin((270 + rand2) * Mathf.Deg2Rad) * i/4, 0), Quaternion.Euler(0, 0, (rand2)));
                     tmp2.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand2) * Mathf.Deg2Rad), Mathf.Sin((270 + rand2) * Mathf.Deg2Rad), 20);
-                    GameObject tmp3 = Instantiate(Ebullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand3) * Mathf.Deg2Rad) * i/4, transform.position.y + Mathf.Sin((270 + rand3) * Mathf.Deg2Rad) * i/4, 0), Quaternion.identity);
+                    GameObject tmp3 = Instantiate(ELaserBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand3) * Mathf.Deg2Rad) * i/4, transform.position.y + Mathf.Sin((270 + rand3) * Mathf.Deg2Rad) * i/4, 0), Quaternion.Euler(0, 0, (rand3)));
                     tmp3.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand3) * Mathf.Deg2Rad), Mathf.Sin((270 + rand3) * Mathf.Deg2Rad), 20);
                 }
                 LaserCharging = false;
