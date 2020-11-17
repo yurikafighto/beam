@@ -8,7 +8,8 @@ TagManager:
   - Boss
   - EBullet
   - Enemy
-  - Ennemy
+  - EBullet10
+  - EBullet20
   layers:
   - Default
   - TransparentFX

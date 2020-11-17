@@ -13,14 +13,19 @@ public class Player : Entity
     private float m_verticalSpeed, m_horizontalSpeed;
     [SerializeField]
     // time between projectiles
-    private float projectileCD, spellCD1;
+    private float projectileCD;
+    private float spellCD1 = 5000;
+    private float spellCD2 = 10000;
+    private float spellCD3 = 20000;
     [SerializeField]
     private GameObject bullet;
     [SerializeField]
-    private Image CDcover;
+    private Image CDcover, CDcover2, CDcover3;
 
     private Stopwatch stopWatchBullet;
     private Stopwatch stopSpell1;
+    private Stopwatch stopSpell2;
+    private Stopwatch stopSpell3;
     private int score = 0;
     
     // delegate action
@@ -73,18 +78,33 @@ public class Player : Entity
         {
             
             Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + 1, 0), Quaternion.identity);
-
             // subscribe to Bullet on hit
             Bullet.OnHit = OnBulletHit;
             stopWatchBullet.Restart();
         }
-        if (Input.GetKey(KeyCode.C) && stopSpell1.ElapsedMilliseconds > spellCD1)
+        if (Input.GetKey(KeyCode.X) && stopSpell1.ElapsedMilliseconds > spellCD1)
         {
             for (int i = 0; i < 10; i++)
             {
-                Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + (i/2), 0), Quaternion.identity);
+                Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + (i / 2), 0), Quaternion.identity);
             }
             stopSpell1.Restart();
+        }
+        if (Input.GetKey(KeyCode.C) && stopSpell2.ElapsedMilliseconds > spellCD2)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + (i / 2), 0), Quaternion.identity);
+            }
+            stopSpell2.Restart();
+        }
+        if (Input.GetKey(KeyCode.V) && stopSpell3.ElapsedMilliseconds > spellCD3)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Instantiate(bullet, new Vector3(transform.position.x, transform.position.y + (i / 2), 0), Quaternion.identity);
+            }
+            stopSpell3.Restart();
         }
 
     }
@@ -95,15 +115,18 @@ public class Player : Entity
         stopWatchBullet.Start();
         stopSpell1 = new Stopwatch();
         stopSpell1.Start();
+        stopSpell2 = new Stopwatch();
+        stopSpell2.Start();
+        stopSpell3 = new Stopwatch();
+        stopSpell3.Start();
 
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if collides with enemy 
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Boss"))
         {
-            hp -= 10;
+            hp -= 1000;
             // update HP bar
             OnHPChange(hp);
 
@@ -115,9 +138,25 @@ public class Player : Entity
             }
         }
 
-        if (collision.gameObject.CompareTag("Boss"))
+        // if collides with enemy 
+        if (collision.gameObject.CompareTag("EBullet20"))
         {
-            hp -= 1000;
+            hp -= 20;
+            // update HP bar
+            OnHPChange(hp);
+
+            // if no more hp
+            if (hp <= 0)
+            {
+                // destroy the player object
+                Destroy(gameObject);
+            }
+        }
+
+        // if collides with enemy 
+        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EBullet10"))
+        {
+            hp -= 10;
             // update HP bar
             OnHPChange(hp);
 
@@ -159,7 +198,9 @@ public class Player : Entity
 
     public void CDmanager()
     {
-        CDcover.GetComponent<Image>().fillAmount = 1-(stopSpell1.ElapsedMilliseconds / spellCD1);
+        CDcover.GetComponent<Image>().fillAmount = 1 - (stopSpell1.ElapsedMilliseconds / spellCD1);
+        //CDcover2.GetComponent<Image>().fillAmount = 1 - (stopSpell2.ElapsedMilliseconds / spellCD2);
+        //CDcover3.GetComponent<Image>().fillAmount = 1 - (stopSpell3.ElapsedMilliseconds / spellCD3);
     }
 
 

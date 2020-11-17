@@ -18,7 +18,7 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     void Start()
     {
         int max = player.GetComponent<Player>().GetMaxHP();
-        int maxBoss = boss.GetComponent<Boss1>().GetMaxHP();
+        int maxBoss = boss.GetComponent<Boss>().GetMaxHP();
         // initialize HP bars to max HP
         hpBar.maxValue = max;
         hpBar.value = max;
@@ -43,6 +43,7 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     private void OnBossHPChange(int currentHP)
     {
         hpBoss.value = currentHP;
+
         if (currentHP <= 0)
         {
             Cursor.visible = true;
@@ -51,9 +52,9 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         }
     }
 
-    private void OnBossAppear()
+    private void OnBossAppear(bool b)
     {
-        hpBoss.gameObject.SetActive(true);
+        hpBoss.gameObject.SetActive(b);
     }
 
     private void OnScoreChange(int currentScore)
@@ -68,9 +69,9 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         Player.OnScoreChange = OnScoreChange;
         // subscribe to Player on score change
         Player.OnHPChange = OnHPChange;
-        Boss1.OnBossHPChange = OnBossHPChange;
 
-        Boss1.OnBossAppear = OnBossAppear;
+        Boss.OnBossHPChange = OnBossHPChange;
+        Boss.OnBossAppear = OnBossAppear;
 
         playAgain.onClick.AddListener(GameManager.Instance.ResetLevel);
         mainMenu.onClick.AddListener(GameManager.Instance.BackToMain);
