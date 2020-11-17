@@ -10,6 +10,8 @@ TagManager:
   - Enemy
   - EBullet10
   - EBullet20
+  - Shield
+  - StarSurge
   layers:
   - Default
   - TransparentFX

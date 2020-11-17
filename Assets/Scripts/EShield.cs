@@ -67,26 +67,25 @@ public class EShield : Entity
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if collides with the player
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            // destroy the enemy object
-            Destroy(gameObject);
-            ShieldDestroyed();
-        }
 
         // if collides with bullet
         if (collision.gameObject.CompareTag("Bullet"))
         {
             hp -= 10;
 
-            // if no more hp
-            if (hp <= 0)
-            {
-                // destroy the enemy object
-                Destroy(gameObject);
-                ShieldDestroyed();
-            }
+        }
+
+        if (collision.gameObject.CompareTag("StarSurge"))
+        {
+            hp -= 50;
+        }
+
+        // if no more hp
+        if (hp <= 0)
+        {
+            // destroy the enemy object
+            Destroy(gameObject);
+            ShieldDestroyed();
         }
     }
 

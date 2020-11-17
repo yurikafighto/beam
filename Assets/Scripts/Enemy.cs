@@ -75,14 +75,18 @@ public class Enemy : Entity
         if (collision.gameObject.CompareTag("Bullet"))
         {
             hp -= 10;
+        }
 
-            // if no more hp
-            if (hp <= 0)
-            {
-                // destroy the enemy object
-                Destroy(gameObject);
+        if (collision.gameObject.CompareTag("StarSurge"))
+        {
+            hp -= 100;
+        }
+        // if no more hp
+        if (hp <= 0)
+        {
+            // destroy the enemy object
+            Destroy(gameObject);
 
-            }
         }
     }
 

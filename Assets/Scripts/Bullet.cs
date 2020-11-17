@@ -42,12 +42,21 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if collides with enemy 
-        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss") )
-        {
-            OnHit();
-            Destroy(gameObject);
-        }
+            // if collides with enemy 
+            if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss"))
+            {
+                OnHit();
+                if (!gameObject.CompareTag("StarSurge") || collision.gameObject.CompareTag("Boss"))
+                {
+                    Destroy(gameObject);
+                }
+            }
+
     }
 
+    public void SetSpeed(float horizontal, float vertical, int velocity)
+    {
+        m_horizontalSpeed = horizontal * velocity;
+        m_verticalSpeed = vertical * velocity;
+    }
 }
