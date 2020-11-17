@@ -147,15 +147,21 @@ public class Boss2 : Boss
         if (collision.gameObject.CompareTag("Bullet"))
         {
             hp -= 10;
-            OnBossHPChange(hp);
+        }
+        // if collides with bullet
+        if (collision.gameObject.CompareTag("StarSurge"))
+        {
+            hp -= 50;
+        }
 
-            // if no more hp
-            if (hp <= 0)
-            {
-                // destroy the enemy object
-                Destroy(gameObject);
-                OnBossAppear(false);
-            }
+        OnBossHPChange(hp);
+
+        // if no more hp
+        if (hp <= 0)
+        {
+            // destroy the enemy object
+            Destroy(gameObject);
+            OnBossAppear(false);
         }
     }
 

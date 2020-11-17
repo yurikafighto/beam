@@ -1,8 +1,7 @@
 ﻿using System.Diagnostics;
 using UnityEngine;
-using System;
 
-public class EShield : Entity
+public class EBomb : Entity
 {
     //This field gets serialized even though it is private
     //because it has the SerializeField attribute applied.
@@ -10,13 +9,9 @@ public class EShield : Entity
     private float m_verticalSpeed, m_horizontalSpeed;
     private Camera m_camera;
     [SerializeField]
-    private float projectileCD;
-    [SerializeField]
     private GameObject Ebullet;
 
     private Stopwatch stopWatch;
-
-    public static Action ShieldDestroyed = delegate { };
 
     // Update is called once per frame
     void Update()
@@ -25,7 +20,6 @@ public class EShield : Entity
         if (!GameManager.Instance.GetPauseStatus() && !GameManager.Instance.IsDead())
         {
             EnemyMouvment();
-            FireBullet();
         }
     }
 
@@ -40,19 +34,13 @@ public class EShield : Entity
         //// if out of bottom screen
         if (screenPos.y <= 0)
         {
+            for (int i = 0; i < 6; i++)
+            {
+                GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y+0.1f, 0), Quaternion.identity);
+                tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((60 * i) * Mathf.Deg2Rad), Mathf.Sin((60 * i) * Mathf.Deg2Rad), 10);
+            }
             Destroy(gameObject); // destroy enemy
         }
-    }
-    private void FireBullet()
-    {
-        if (stopWatch.ElapsedMilliseconds > projectileCD)
-        {
-            GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-            tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos(270 * Mathf.Deg2Rad), Mathf.Sin(270 * Mathf.Deg2Rad), 10);
-            // subscribe to Bullet on hit
-            stopWatch.Restart();
-        }
-
     }
 
     protected override void Awake()
@@ -67,25 +55,33 @@ public class EShield : Entity
 
     private void OnCollisionEnter(Collision collision)
     {
+        // if collides with the player
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            hp = 0;
+        }
 
         // if collides with bullet
         if (collision.gameObject.CompareTag("Bullet"))
         {
             hp -= 10;
-
         }
 
         if (collision.gameObject.CompareTag("StarSurge"))
         {
-            hp -= 50;
+            hp -= 100;
         }
-
         // if no more hp
         if (hp <= 0)
         {
             // destroy the enemy object
+            for (int i = 0; i < 6; i++)
+            {
+                GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((60 * i) * Mathf.Deg2Rad ), Mathf.Sin((60 * i) * Mathf.Deg2Rad), 10);
+            }
             Destroy(gameObject);
-            ShieldDestroyed();
+
         }
     }
 

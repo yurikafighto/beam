@@ -155,14 +155,20 @@ public class Boss3 : Boss
         if (collision.gameObject.CompareTag("Bullet") && ShieldsActive<=0) //If the boss has active shields, it doesnt take damages
         {
             hp -= 10;
-            OnBossHPChange(hp);
-            // if no more hp
-            if (hp <= 0)
-            {
-                // destroy the enemy object
-                Destroy(gameObject);
-                OnBossAppear(false);
-            }
+        }
+        // if collides with bullet
+        if (collision.gameObject.CompareTag("StarSurge") && ShieldsActive <= 0)
+        {
+            hp -= 50;
+        }
+
+        OnBossHPChange(hp);
+        // if no more hp
+        if (hp <= 0)
+        {
+            // destroy the enemy object
+            Destroy(gameObject);
+            OnBossAppear(false);
         }
     }
 

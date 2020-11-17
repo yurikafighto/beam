@@ -89,14 +89,14 @@ public class Boss1 : Boss
                 rand = UnityEngine.Random.Range(-50, 50);
                 rand2 = UnityEngine.Random.Range(-50, 50);
                 rand3 = UnityEngine.Random.Range(-50, 50);
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 5; i++)
                 {
-                    GameObject tmp = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand) * Mathf.Deg2Rad) * i, 0), Quaternion.identity);
-                    tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand) * Mathf.Deg2Rad), Mathf.Sin((270 + rand) * Mathf.Deg2Rad), 10);
-                    GameObject tmp2 = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand2) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand2) * Mathf.Deg2Rad) * i, 0), Quaternion.identity);
-                    tmp2.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand2) * Mathf.Deg2Rad), Mathf.Sin((270 + rand2) * Mathf.Deg2Rad), 10);
-                    GameObject tmp3 = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand3) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand3) * Mathf.Deg2Rad) * i, 0), Quaternion.identity);
-                    tmp3.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand3) * Mathf.Deg2Rad), Mathf.Sin((270 + rand3) * Mathf.Deg2Rad), 10);
+                    GameObject tmp = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand) * Mathf.Deg2Rad) * i, 0), Quaternion.Euler(0, 0, (rand-90)));
+                    tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand) * Mathf.Deg2Rad), Mathf.Sin((270 + rand) * Mathf.Deg2Rad), 7);
+                    GameObject tmp2 = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand2) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand2) * Mathf.Deg2Rad) * i, 0), Quaternion.Euler(0, 0, (rand2-90)));
+                    tmp2.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand2) * Mathf.Deg2Rad), Mathf.Sin((270 + rand2) * Mathf.Deg2Rad), 7);
+                    GameObject tmp3 = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand3) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand3) * Mathf.Deg2Rad) * i, 0), Quaternion.Euler(0, 0, (rand3-90)));
+                    tmp3.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand3) * Mathf.Deg2Rad), Mathf.Sin((270 + rand3) * Mathf.Deg2Rad), 7);
                 }
                 LaserWatch.Restart();
             }
@@ -104,11 +104,11 @@ public class Boss1 : Boss
             {
                 for (int i = 0; i < 30; i++)
                 {
-                    GameObject tmp = Instantiate(ELaserBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand) * Mathf.Deg2Rad)*i/4, transform.position.y + Mathf.Sin((270 + rand) * Mathf.Deg2Rad)*i/4, 0), Quaternion.Euler(0, 0, (rand)));
+                    GameObject tmp = Instantiate(ELaserBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand) * Mathf.Deg2Rad)*i/4, transform.position.y + Mathf.Sin((270 + rand) * Mathf.Deg2Rad)*i/4, 0), Quaternion.Euler(0, 0, rand));
                     tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand) * Mathf.Deg2Rad), Mathf.Sin((270 + rand) * Mathf.Deg2Rad), 20);
-                    GameObject tmp2 = Instantiate(ELaserBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand2) * Mathf.Deg2Rad) * i/4, transform.position.y + Mathf.Sin((270 + rand2) * Mathf.Deg2Rad) * i/4, 0), Quaternion.Euler(0, 0, (rand2)));
+                    GameObject tmp2 = Instantiate(ELaserBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand2) * Mathf.Deg2Rad) * i/4, transform.position.y + Mathf.Sin((270 + rand2) * Mathf.Deg2Rad) * i/4, 0), Quaternion.Euler(0, 0, rand2));
                     tmp2.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand2) * Mathf.Deg2Rad), Mathf.Sin((270 + rand2) * Mathf.Deg2Rad), 20);
-                    GameObject tmp3 = Instantiate(ELaserBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand3) * Mathf.Deg2Rad) * i/4, transform.position.y + Mathf.Sin((270 + rand3) * Mathf.Deg2Rad) * i/4, 0), Quaternion.Euler(0, 0, (rand3)));
+                    GameObject tmp3 = Instantiate(ELaserBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand3) * Mathf.Deg2Rad) * i/4, transform.position.y + Mathf.Sin((270 + rand3) * Mathf.Deg2Rad) * i/4, 0), Quaternion.Euler(0, 0, rand3));
                     tmp3.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand3) * Mathf.Deg2Rad), Mathf.Sin((270 + rand3) * Mathf.Deg2Rad), 20);
                 }
                 LaserCharging = false;
@@ -160,15 +160,22 @@ public class Boss1 : Boss
         if (collision.gameObject.CompareTag("Bullet"))
         {
             hp -= 10;
-            OnBossHPChange(hp);
+        }
 
-            // if no more hp
-            if (hp <= 0)
-            {
-                // destroy the enemy object
-                Destroy(gameObject);
-                OnBossAppear(false);
-            }
+        // if collides with bullet
+        if (collision.gameObject.CompareTag("StarSurge"))
+        {
+            hp -= 50;
+        }
+
+        OnBossHPChange(hp);
+
+        // if no more hp
+        if (hp <= 0)
+        {
+            // destroy the enemy object
+            Destroy(gameObject);
+            OnBossAppear(false);
         }
     }
 

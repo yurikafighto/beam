@@ -1,8 +1,7 @@
 ﻿using System.Diagnostics;
 using UnityEngine;
-using System;
 
-public class EShield : Entity
+public class EStarship : Entity
 {
     //This field gets serialized even though it is private
     //because it has the SerializeField attribute applied.
@@ -15,8 +14,6 @@ public class EShield : Entity
     private GameObject Ebullet;
 
     private Stopwatch stopWatch;
-
-    public static Action ShieldDestroyed = delegate { };
 
     // Update is called once per frame
     void Update()
@@ -67,25 +64,29 @@ public class EShield : Entity
 
     private void OnCollisionEnter(Collision collision)
     {
+        // if collides with the player
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            // destroy the enemy object
+            Destroy(gameObject);
+        }
 
         // if collides with bullet
         if (collision.gameObject.CompareTag("Bullet"))
         {
             hp -= 10;
-
         }
 
         if (collision.gameObject.CompareTag("StarSurge"))
         {
-            hp -= 50;
+            hp -= 100;
         }
-
         // if no more hp
         if (hp <= 0)
         {
             // destroy the enemy object
             Destroy(gameObject);
-            ShieldDestroyed();
+
         }
     }
 
