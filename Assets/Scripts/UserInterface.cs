@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UserInterface : MonoBehaviourSingleton<UserInterface> 
@@ -7,12 +6,13 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     [SerializeField]
     GameObject gameOver, win, player, boss, pausePanel, playing;
     [SerializeField]
-    Button playAgain, resume, mainMenu;
+    Button playAgain, resume, mainMenuPause, mainMenuGameOver;
     [SerializeField]
-    Text score;
+    Text score, newBest, gameOverScore;
     [SerializeField]
     Slider hpBar, hpBoss;
-
+    public static string bestScoreKey = "BESTSCORE";
+    private int currentScore;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +24,8 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         hpBar.value = max;
         hpBoss.maxValue = maxBoss;
         hpBoss.value = maxBoss;
+        currentScore = 0;
+        newBest.gameObject.SetActive(false);
     }
 
 
@@ -32,11 +34,24 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         hpBar.value = currentHP;
         if (currentHP <= 0)
         {
-            
             Cursor.visible = true;
-            gameOver.SetActive(true);
             playing.SetActive(false);
             GameManager.Instance.StopActivity();
+            gameOver.SetActive(true);
+
+            // display score
+            gameOverScore.text = $"SCORE : {currentScore}";
+
+            // get the current best score
+            int bestScore = PlayerPrefs.GetInt(bestScoreKey);
+
+            if(currentScore > bestScore)
+            {
+                newBest.gameObject.SetActive(true);
+                PlayerPrefs.SetInt(bestScoreKey, currentScore);
+                PlayerPrefs.Save();
+            }
+            
         }
     }
 
@@ -57,8 +72,9 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         hpBoss.gameObject.SetActive(b);
     }
 
-    private void OnScoreChange(int currentScore)
+    private void OnScoreChange(int playerScore)
     {
+        currentScore = playerScore;
         score.text = $"SCORE : {currentScore}";
     }
 
@@ -74,7 +90,8 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         Boss.OnBossAppear = OnBossAppear;
 
         playAgain.onClick.AddListener(GameManager.Instance.ResetLevel);
-        mainMenu.onClick.AddListener(GameManager.Instance.BackToMain);
+        mainMenuPause.onClick.AddListener(GameManager.Instance.BackToMain);
+        mainMenuGameOver.onClick.AddListener(GameManager.Instance.BackToMain);
         resume.onClick.AddListener(delegate { GameManager.Instance.Play(true); });
 
     }
