@@ -40,17 +40,17 @@ public class Boss3 : Boss
         if (transform.position.y <= 2.5 && m_verticalSpeed != 0)
         {
             m_verticalSpeed = 0;
-            SummonShields(0, -3);
+            SummonShields(0, -2.8f);
         }
         transform.position = new Vector3(transform.position.x, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);//mouvement de base
 
     }
 
-    private void FireBullet()
+    private void FireBullet() // Bullet Pattern changes if boss has shields on field or not
     {
         if (BulletCDWatch.ElapsedMilliseconds>ProjectileCD)
         {
-            if (ShieldsActive <= 0 && BulletCDWatch.ElapsedMilliseconds > ProjectileCD*3) //Bullet Pattern if shields are down (slower attaack speed)
+            if (ShieldsActive <= 0 && BulletCDWatch.ElapsedMilliseconds > ProjectileCD*3) //Bullet Pattern if shields are down (slower attaack speed) but multiple projectile
             {
                 rand = UnityEngine.Random.Range(-50, 50);
                 for (int i = 0; i < BulletFired; i++)
@@ -108,16 +108,16 @@ public class Boss3 : Boss
         {
             BulletFired = 5;
             aimSpeed = 4;
-            SummonShields(3, 0);
-            SummonShields(-3, 0);
+            SummonShields(2.8f, 0);
+            SummonShields(-2.8f, 0);
         }
         if (hp < maxHP * 0.33 && BulletFired == 5) //summons third wave of shields
         {
             BulletFired = 7;
             aimSpeed = 6;
-            SummonShields(3, 0);
-            SummonShields(0, -3);
-            SummonShields(-3, 0);
+            SummonShields(2.8f, 0);
+            SummonShields(0, -2.8f);
+            SummonShields(-2.8f, 0);
         }
     }
     private void ShieldDestroyed()

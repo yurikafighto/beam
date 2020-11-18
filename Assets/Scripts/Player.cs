@@ -14,7 +14,7 @@ public class Player : Entity
     [SerializeField]
     // time between projectiles
     private float projectileCD;
-    private float spellCD1 = 5000, spellCD2 = 10000, spellCD3 = 17000;
+    private float spellCD1 = 5000, spellCD2 = 10000, spellCD3 = 12000;
     [SerializeField]
     private GameObject bullet, laser, star, barrier, spell1, spell2, spell3;
     [SerializeField]
@@ -105,7 +105,7 @@ public class Player : Entity
             for (int i = 0; i < 3; i++)
             {
                 GameObject tmp = Instantiate(star, new Vector3(transform.position.x, transform.position.y+1, 0), Quaternion.identity);
-                tmp.GetComponent<Bullet>().SetSpeed(Mathf.Cos((60 + 30*i) * Mathf.Deg2Rad), Mathf.Sin((60 + 30*i) * Mathf.Deg2Rad), 4);
+                tmp.GetComponent<Bullet>().SetSpeed(Mathf.Cos((35 + 55*i) * Mathf.Deg2Rad), Mathf.Sin((35 + 55*i) * Mathf.Deg2Rad), 4);
             }
             stopSpell2.Restart();
             soundStar();
