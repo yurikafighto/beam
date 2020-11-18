@@ -181,7 +181,7 @@ public class EnemiesManager : MonoBehaviourSingleton<EnemiesManager>
         return nb;
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         m_camera = Camera.main;
         nextWave = 0;

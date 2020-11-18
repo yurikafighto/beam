@@ -18,6 +18,7 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
 
 
     public static string bestScoreKey = "BESTSCORE";
+    public static string currentScoreKey = "CURRENTSCORE";
     private int currentScore;
     
 
@@ -70,13 +71,15 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     private void OnScoreChange(int playerScore)
     {
         currentScore = playerScore;
+        // save current score for next level
+        PlayerPrefs.SetInt(currentScoreKey, currentScore);
 
         int tmp = playerScore;
         string tmpString = "";
         while (tmp < 100000)
         {
             tmpString += "0";
-            tmp = tmp * 10;
+            tmp *= 10;
         }
         score.text = tmpString + playerScore;
     }

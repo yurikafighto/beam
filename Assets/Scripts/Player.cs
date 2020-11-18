@@ -49,7 +49,11 @@ public class Player : Entity
             }
         }            
     }
-    
+    private void Start()
+    {
+        score = PlayerPrefs.GetInt(UserInterface.currentScoreKey, score);
+    }
+
     private void PlayerControl()
     {
         // set screen position limit
