@@ -24,7 +24,8 @@ public class EnemiesManager : MonoBehaviourSingleton<EnemiesManager>
         public GroupEnemies[] enemiesGroup;
         public float timeBetweenGroups;
     }
-
+    [SerializeField]
+    private bool isInfiniteLevel = false;
     [SerializeField]
     private Wave[] waves;
     [SerializeField]
@@ -66,7 +67,7 @@ public class EnemiesManager : MonoBehaviourSingleton<EnemiesManager>
             }
             else
             {
-                if ( waveCountdown <= 3 && waveCountdown >= 1 && waves[nextWave].isBoss)
+                if ( waveCountdown <=3  && waveCountdown >= 2 && waves[nextWave].isBoss)
                 {
                     UserInterface.Instance.DisplayBossWarning();
                 }
@@ -86,6 +87,10 @@ public class EnemiesManager : MonoBehaviourSingleton<EnemiesManager>
         // if no more incoming wave
         if (nextWave + 1 > waves.Length - 1)
         {
+            if (isInfiniteLevel)
+            {
+                nextWave = 0;
+            }
             cleared = true;
         }
         else
@@ -188,5 +193,9 @@ public class EnemiesManager : MonoBehaviourSingleton<EnemiesManager>
         waveCountdown = 4;
         state = SpawnState.COUNTING;
         cleared = false;
+        if (isInfiniteLevel)
+        {
+            UserInterface.Instance.infinite();
+        }
     }
 }

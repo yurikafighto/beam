@@ -14,6 +14,12 @@ public class TitleScreen : MonoBehaviour
     [SerializeField]
     List<GameObject> ObjectList;
 
+
+    private void Start()
+    {
+        // reset score
+        PlayerPrefs.SetInt(UserInterface.currentScoreKey, 0);
+    }
     private void Awake()
     {
         // load next scene

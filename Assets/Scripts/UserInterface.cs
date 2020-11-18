@@ -16,6 +16,8 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     [SerializeField]
     private new Animator animation;
 
+    private bool isInfinite = false;
+
 
     public static string bestScoreKey = "BESTSCORE";
     public static string currentScoreKey = "CURRENTSCORE";
@@ -39,6 +41,9 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         currentScore = 0;
         newBest.gameObject.SetActive(false);
         animation.SetTrigger("LevelStart");
+        // initialise score for level
+        score.text = $"0{PlayerPrefs.GetInt(currentScoreKey)}";
+
     }
 
 
@@ -74,14 +79,7 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         // save current score for next level
         PlayerPrefs.SetInt(currentScoreKey, currentScore);
 
-        int tmp = playerScore;
-        string tmpString = "";
-        while (tmp < 100000)
-        {
-            tmpString += "0";
-            tmp *= 10;
-        }
-        score.text = tmpString + playerScore;
+        score.text = ScoreFormat(currentScore) + playerScore;
     }
 
     private void OnBossHPChange(int currentHP)
@@ -90,13 +88,17 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
 
         if (currentHP <= 0)
         {
-            Cursor.visible = true;
+            if (isInfinite)
+            {
+                Cursor.visible = true;
 
-            // display score
-            winScore.text = $"SCORE : {currentScore}";
+                // display score
+                winScore.text = $"SCORE : {currentScore}";
 
-            win.SetActive(true);
-            playing.SetActive(false);
+                win.SetActive(true);
+                playing.SetActive(false);
+            }
+
         }
     }
 
@@ -138,5 +140,23 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     public void DisplayBossWarning()
     {
         animation.SetTrigger("BossComing");
+    }
+
+    private string ScoreFormat(int theScore)
+    {
+        int tmp = theScore;
+        string tmpString = "";
+        while (tmp < 100000)
+        {
+            tmpString += "0";
+            tmp *= 10;
+        }
+
+        return tmpString;
+    }
+
+    public void infinite()
+    {
+        isInfinite = true;
     }
 }

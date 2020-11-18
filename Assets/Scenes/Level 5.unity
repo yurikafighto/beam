@@ -482,7 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23a62e6ed1a87745a24dce41084a213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 120
+  maxHP: 1000000000
   m_camera: {fileID: 519420031}
   m_verticalSpeed: 6
   m_horizontalSpeed: 6
@@ -5658,6 +5658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671b1d28a6d826a42831dca15e59c2c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInfiniteLevel: 1
   waves:
   - wavename: W1
     isBoss: 0
@@ -5669,93 +5670,17 @@ MonoBehaviour:
       spawnCenter: 0.1
       enemyFormation: 1
     timeBetweenGroups: 0
-  - wavename: W2
-    isBoss: 0
-    enemiesGroup:
-    - groupName: Boss
-      enemy: {fileID: 4205650284403329596, guid: 9d493f6a82c5679408fe98c0d2645cc8,
-        type: 3}
-      count: 2
-      spawnCenter: 0
-      enemyFormation: 4
-    - groupName: Boss
-      enemy: {fileID: 5834220349612492750, guid: 57dd8feb28e16e94fb4cd5abab4bc12b,
-        type: 3}
-      count: 4
-      spawnCenter: 0
-      enemyFormation: 3
-    timeBetweenGroups: 1
-  - wavename: W3
-    isBoss: 0
-    enemiesGroup:
-    - groupName: Boss
-      enemy: {fileID: 5834220349612492750, guid: 57dd8feb28e16e94fb4cd5abab4bc12b,
-        type: 3}
-      count: 5
-      spawnCenter: 0
-      enemyFormation: 4
-    - groupName: Boss
-      enemy: {fileID: 4205650284403329596, guid: 9d493f6a82c5679408fe98c0d2645cc8,
-        type: 3}
-      count: 2
-      spawnCenter: 0
-      enemyFormation: 4
-    timeBetweenGroups: 1
-  - wavename: W4
-    isBoss: 0
-    enemiesGroup:
-    - groupName: Boss
-      enemy: {fileID: 4205650284403329596, guid: 9d493f6a82c5679408fe98c0d2645cc8,
-        type: 3}
-      count: 1
-      spawnCenter: 0
-      enemyFormation: 2
-    - groupName: Boss
-      enemy: {fileID: 4205650284403329596, guid: 9d493f6a82c5679408fe98c0d2645cc8,
-        type: 3}
-      count: 2
-      spawnCenter: 0
-      enemyFormation: 4
-    - groupName: Boss
-      enemy: {fileID: 4205650284403329596, guid: 9d493f6a82c5679408fe98c0d2645cc8,
-        type: 3}
-      count: 3
-      spawnCenter: 0
-      enemyFormation: 4
-    timeBetweenGroups: 1
-  - wavename: W5
-    isBoss: 0
-    enemiesGroup:
-    - groupName: Boss
-      enemy: {fileID: 5834220349612492750, guid: 57dd8feb28e16e94fb4cd5abab4bc12b,
-        type: 3}
-      count: 5
-      spawnCenter: 0
-      enemyFormation: 1
-    - groupName: Boss
-      enemy: {fileID: 4205650284403329596, guid: 9d493f6a82c5679408fe98c0d2645cc8,
-        type: 3}
-      count: 1
-      spawnCenter: 0
-      enemyFormation: 4
-    - groupName: Boss
-      enemy: {fileID: 7162140773003737326, guid: e4b9bcf8f32393e489c063029c6705a2,
-        type: 3}
-      count: 1
-      spawnCenter: 0
-      enemyFormation: 2
-    timeBetweenGroups: 2
-  - wavename: BOSS
+  - wavename: W1
     isBoss: 1
     enemiesGroup:
-    - groupName: Boss
+    - groupName: wncdown
       enemy: {fileID: 2321704820800975822, guid: e461741ca8588c947bf6c27fe01623e6,
         type: 3}
       count: 1
-      spawnCenter: 10
+      spawnCenter: 0.1
       enemyFormation: 2
-    timeBetweenGroups: 5
-  timeBetweenWaves: 7
+    timeBetweenGroups: 0
+  timeBetweenWaves: 5
 --- !u!4 &2020930566
 Transform:
   m_ObjectHideFlags: 0
