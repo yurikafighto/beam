@@ -14,7 +14,7 @@ public class Player : Entity
     [SerializeField]
     // time between projectiles
     private float projectileCD;
-    private float spellCD1 = 5000, spellCD2 = 10000, spellCD3 = 20000;
+    private float spellCD1 = 5000, spellCD2 = 10000, spellCD3 = 17000;
     [SerializeField]
     private GameObject bullet, laser, star, barrier, spell1, spell2, spell3;
     [SerializeField]

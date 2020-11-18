@@ -207,5 +207,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 20
-  m_verticalSpeed: 1
+  m_verticalSpeed: 1.5
   m_horizontalSpeed: 0
