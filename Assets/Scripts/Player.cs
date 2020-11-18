@@ -20,12 +20,17 @@ public class Player : Entity
     [SerializeField]
     private Image CDcover, CDcover2, CDcover3;
 
+
     private Stopwatch stopWatchBullet, stopSpell1, stopSpell2, stopSpell3, stopShield;
     private int score = 0;
     
     // delegate action
     public static Action<int> OnHPChange = delegate { };
     public static Action<int> OnScoreChange = delegate { };
+    public static Action soundBullet = delegate { };
+    public static Action soundLaser = delegate { };
+    public static Action soundStar = delegate { };
+    public static Action soundBarrier = delegate { };
 
 
     // Update is called once per frame
@@ -38,7 +43,6 @@ public class Player : Entity
             CDmanager();
             if (barrier.activeSelf && stopShield.ElapsedMilliseconds>2000)
             {
-                UnityEngine.Debug.Log("a");
                 barrier.SetActive(false);
             }
         }            
@@ -81,6 +85,7 @@ public class Player : Entity
             // subscribe to Bullet on hit
             Bullet.OnHit = OnBulletHit;
             stopWatchBullet.Restart();
+            soundBullet();
         }
         if (Input.GetKey(KeyCode.S) && stopSpell1.ElapsedMilliseconds > spellCD1 && spell1.activeSelf)
         {
@@ -89,6 +94,7 @@ public class Player : Entity
                 Instantiate(laser, new Vector3(transform.position.x, transform.position.y + (i / 2), 0), Quaternion.identity);
             }
             stopSpell1.Restart();
+            soundLaser();
         }
         if (Input.GetKey(KeyCode.D) && stopSpell2.ElapsedMilliseconds > spellCD2 && spell2.activeSelf)
         {
@@ -98,17 +104,33 @@ public class Player : Entity
                 tmp.GetComponent<Bullet>().SetSpeed(Mathf.Cos((60 + 30*i) * Mathf.Deg2Rad), Mathf.Sin((60 + 30*i) * Mathf.Deg2Rad), 4);
             }
             stopSpell2.Restart();
+            soundStar();
         }
         if (Input.GetKey(KeyCode.F) && stopSpell3.ElapsedMilliseconds > spellCD3 && spell3.activeSelf)
         {
             barrier.SetActive(true);
             stopShield.Restart(); 
             stopSpell3.Restart();
+            soundBarrier();
         }
 
     }
+
+    private new void ScoreEnemy(int points)
+    {
+        score += points;
+        OnScoreChange(score);
+    }
+    private void ScoreBoss()
+    {
+        score += hp*100;
+        OnScoreChange(score);
+    }
+
     protected override void Awake()
     {
+        Boss.ScoreBoss = ScoreBoss;
+        Entity.ScoreEnemy = ScoreEnemy;
         base.Awake();
         stopWatchBullet = new Stopwatch();
         stopWatchBullet.Start();
@@ -162,7 +184,7 @@ public class Player : Entity
 
     private void OnBulletHit()
     {
-        score++;
+        score += 10;
         OnScoreChange(score);
     }
 

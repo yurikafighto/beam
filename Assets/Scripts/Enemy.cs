@@ -70,7 +70,7 @@ public class Enemy : Entity
         {
             // destroy the enemy object
             Destroy(gameObject);
-
+            ScoreEnemy(50);
         }
     }
 

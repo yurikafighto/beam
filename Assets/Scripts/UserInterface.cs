@@ -10,7 +10,9 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     [SerializeField]
     Text score, newBest, gameOverScore;
     [SerializeField]
-    Slider hpBar, hpBoss;
+    Slider hpBar, hpBoss, progressBar;
+    [SerializeField]
+    int nbWave;
     [SerializeField]
     Animator animation;
 
@@ -28,6 +30,9 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         hpBar.value = max;
         hpBoss.maxValue = maxBoss;
         hpBoss.value = maxBoss;
+        progressBar.value = 0;
+        progressBar.maxValue = nbWave;
+
         currentScore = 0;
         newBest.gameObject.SetActive(false);
         animation.SetTrigger("LevelStart");
@@ -79,8 +84,24 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
 
     private void OnScoreChange(int playerScore)
     {
+        //currentScore = playerScore;
+        //score.text = $"SCORE : {currentScore}";
+
         currentScore = playerScore;
-        score.text = $"SCORE : {currentScore}";
+
+        int tmp = playerScore;
+        string tmpString = "";
+        while (tmp < 100000)
+        {
+            tmpString += "0";
+            tmp = tmp * 10;
+        }
+        score.text = tmpString+playerScore;
+    }
+
+    private void advance()
+    {
+        progressBar.value++;
     }
 
     protected override void Awake()
@@ -93,6 +114,7 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
 
         Boss.OnBossHPChange = OnBossHPChange;
         Boss.OnBossAppear = OnBossAppear;
+        EnemiesManager.advance = advance;
 
         playAgain.onClick.AddListener(GameManager.Instance.ResetLevel);
         mainMenuPause.onClick.AddListener(GameManager.Instance.BackToMain);

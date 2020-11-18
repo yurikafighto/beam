@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 public class Entity : MonoBehaviour
 {
@@ -14,5 +15,6 @@ public class Entity : MonoBehaviour
         hp = maxHP;
     }
 
+    public static Action<int> ScoreEnemy = delegate { };
 
 }

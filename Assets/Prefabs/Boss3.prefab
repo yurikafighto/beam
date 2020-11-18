@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 750
+  EBullet: {fileID: 1465490688751951772, guid: 315f1243be805a84588c93cd05483659, type: 3}
   EVoidBullet: {fileID: 2401327464032980377, guid: 07fb6b1de3df0ec4f9e1aa99147a1254,
     type: 3}
   Eshield: {fileID: 4714377310181506305, guid: 65a8d37e6b818cd458f66e6575ba8c01, type: 3}

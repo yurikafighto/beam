@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System;
 
 public class EnemiesManager : MonoBehaviour
 
@@ -10,7 +11,8 @@ public class EnemiesManager : MonoBehaviour
         public string groupName;
         public GameObject enemy;
         public int count;
-        public enum EnemyFormation { ARCUP, ARCDOWN, CENTER, RANDOM }
+        public enum EnemyFormation { ARCUP, ARCDOWN, CENTER, RANDOM, HORIZONTAL, VERTICAL }
+        public float spawnCenter;
         public EnemyFormation enemyFormation = EnemyFormation.RANDOM;
     }
 
@@ -37,6 +39,8 @@ public class EnemiesManager : MonoBehaviour
     private SpawnState state;
 
     private bool cleared;
+
+    public static Action advance = delegate { };
 
     private void Update()
     {
@@ -134,6 +138,20 @@ public class EnemiesManager : MonoBehaviour
                 point = m_camera.ScreenToWorldPoint(new Vector3(x, y, z));
             }
             // spawn in arc down shape
+            else if (enemies.enemyFormation == GroupEnemies.EnemyFormation.HORIZONTAL)
+            {
+                float x = (Screen.width / max) * (i + 0.5f);
+                float y = y0;
+                point = m_camera.ScreenToWorldPoint(new Vector3(x, y, z));
+            }   
+            // spawn in arc down shape
+            else if (enemies.enemyFormation == GroupEnemies.EnemyFormation.VERTICAL)
+            {
+                float x = enemies.spawnCenter * Screen.width;
+                float y = y0 + 100*i;
+                point = m_camera.ScreenToWorldPoint(new Vector3(x, y, z));
+            }
+            // spawn in arc down shape
             else if (enemies.enemyFormation == GroupEnemies.EnemyFormation.CENTER)
             {
                 point = m_camera.ScreenToWorldPoint(new Vector3(x0, y0, z));
@@ -141,13 +159,13 @@ public class EnemiesManager : MonoBehaviour
             // random spawning
             else
             {
-                point = m_camera.ScreenToWorldPoint(new Vector3( Random.Range(2, Screen.width - 2), Random.Range(Screen.height, y0 + r ), z) ); 
+                point = m_camera.ScreenToWorldPoint(new Vector3( UnityEngine.Random.Range(2, Screen.width - 2), UnityEngine.Random.Range(Screen.height, y0 + r ), z) ); 
 
             }
             // instantiate ennemies
             Instantiate(enemies.enemy, point, enemies.enemy.transform.rotation);
-        }    
-        
+        }
+        advance();
     }
 
     private void Awake()

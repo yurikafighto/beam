@@ -7,9 +7,8 @@ public class Boss2 : Boss
     private Camera m_camera;
     [SerializeField]
     private GameObject Ebullet, EBigBullet;
-    private float m_horizontalSpeed = 0, m_verticalSpeed = 2, ProjectileCD = 800, SkillsCD = 4000;
+    private float m_horizontalSpeed = 0, m_verticalSpeed = 2, ProjectileCD = 800, SkillsCD = 4000, BulletFired = 3, NextSkill = 1, AngleS2 = 2860, StarTime = 25, starGap = 27;
     private int rand;
-    private int BulletFired = 3, NextSkill = 1, AngleS2=2860, Skill2Gap=25;
     private bool Skill2Charging = false, LastPhase;
 
 
@@ -72,13 +71,13 @@ public class Boss2 : Boss
                 for (int i = 0; i < 3; i++)
                 {
                     GameObject tmp = Instantiate(EBigBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-                    tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand - (30) * (i - 1)) * Mathf.Deg2Rad), Mathf.Sin((270 + rand - (30) * (i - 1)) * Mathf.Deg2Rad), 4);
+                    tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand - (33) * (i - 1)) * Mathf.Deg2Rad), Mathf.Sin((270 + rand - (33) * (i - 1)) * Mathf.Deg2Rad), 4);
                 }
                 NextSkill++;
                 BulletCDWatch.Restart();
                 SkillCDWatch.Restart();
             }
-            else if (NextSkill == 3 && BulletCDWatch.ElapsedMilliseconds > Skill2Gap) // Skill 2 : Fire bullets all over the screen
+            else if (NextSkill == 3 && BulletCDWatch.ElapsedMilliseconds > StarTime) // Skill 2 : Fire bullets all over the screen
             {
                 if (!Skill2Charging)
                 {
@@ -90,11 +89,11 @@ public class Boss2 : Boss
                     tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos(AngleS2 * Mathf.Deg2Rad), Mathf.Sin(AngleS2 * Mathf.Deg2Rad), 4);
                     if (!LastPhase)
                     {
-                        AngleS2 -= 16;
+                        AngleS2 -= starGap;
                     }
                     else
                     {
-                        AngleS2 += 16;
+                        AngleS2 += starGap;
                     }
                 }
                 else //End of the skill
@@ -117,14 +116,16 @@ public class Boss2 : Boss
             BulletFired = 5;
             ProjectileCD = 600;
             SkillsCD = 2500;
-            Skill2Gap = 20;
+            StarTime = 20; 
+            starGap = 23;
         }
         if (hp < maxHP * 0.15 && !LastPhase) //check if the boss gets to thrid phase and sets it in permanant skill 2 phase
         {
             LastPhase = true;
             NextSkill = 3;
             SkillsCD = 0;
-            Skill2Gap = 15;
+            StarTime = 15;
+            starGap = 16;
         }
     }
 
@@ -161,6 +162,7 @@ public class Boss2 : Boss
         {
             // destroy the enemy object
             Destroy(gameObject);
+            ScoreBoss();
             OnBossAppear(false);
         }
     }

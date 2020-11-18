@@ -81,7 +81,7 @@ public class EBomb : Entity
                 tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((60 * i) * Mathf.Deg2Rad ), Mathf.Sin((60 * i) * Mathf.Deg2Rad), 10);
             }
             Destroy(gameObject);
-
+            ScoreEnemy(300);
         }
     }
 
