@@ -11,8 +11,12 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     Text score, newBest, gameOverScore;
     [SerializeField]
     Slider hpBar, hpBoss;
+    [SerializeField]
+    Animator animation;
+
     public static string bestScoreKey = "BESTSCORE";
     private int currentScore;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,7 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         hpBoss.value = maxBoss;
         currentScore = 0;
         newBest.gameObject.SetActive(false);
+        animation.SetTrigger("LevelStart");
     }
 
 
