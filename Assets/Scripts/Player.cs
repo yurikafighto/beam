@@ -115,7 +115,6 @@ public class Player : Entity
     private void ScoreBoss()
     {
         score += hp*100;
-        UnityEngine.Debug.Log(hp * 100);
         OnScoreChange(score);
     }
 

@@ -89,13 +89,13 @@ public class Boss1 : Boss
                 rand = UnityEngine.Random.Range(-50, 50);
                 rand2 = UnityEngine.Random.Range(-50, 50);
                 rand3 = UnityEngine.Random.Range(-50, 50);
-                for (int i = 0; i < 5; i++)
+                for (int i = 1; i < 4; i++)
                 {
-                    GameObject tmp = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand) * Mathf.Deg2Rad) * i, 0), Quaternion.Euler(0, 0, (rand-90)));
+                    GameObject tmp = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand) * Mathf.Deg2Rad) * 1.5f*i, transform.position.y + Mathf.Sin((270 + rand) * Mathf.Deg2Rad) * 1.5f*i, 0), Quaternion.Euler(0, 0, (rand-90)));
                     tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand) * Mathf.Deg2Rad), Mathf.Sin((270 + rand) * Mathf.Deg2Rad), 7);
-                    GameObject tmp2 = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand2) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand2) * Mathf.Deg2Rad) * i, 0), Quaternion.Euler(0, 0, (rand2-90)));
+                    GameObject tmp2 = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand2) * Mathf.Deg2Rad) * 1.5f*i, transform.position.y + Mathf.Sin((270 + rand2) * Mathf.Deg2Rad) * 1.5f * i, 0), Quaternion.Euler(0, 0, (rand2-90)));
                     tmp2.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand2) * Mathf.Deg2Rad), Mathf.Sin((270 + rand2) * Mathf.Deg2Rad), 7);
-                    GameObject tmp3 = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand3) * Mathf.Deg2Rad) * i, transform.position.y + Mathf.Sin((270 + rand3) * Mathf.Deg2Rad) * i, 0), Quaternion.Euler(0, 0, (rand3-90)));
+                    GameObject tmp3 = Instantiate(EWarningBullet, new Vector3(transform.position.x + Mathf.Cos((270 + rand3) * Mathf.Deg2Rad) * 1.5f * i, transform.position.y + Mathf.Sin((270 + rand3) * Mathf.Deg2Rad) * 1.5f * i, 0), Quaternion.Euler(0, 0, (rand3-90)));
                     tmp3.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand3) * Mathf.Deg2Rad), Mathf.Sin((270 + rand3) * Mathf.Deg2Rad), 7);
                 }
                 LaserWatch.Restart();

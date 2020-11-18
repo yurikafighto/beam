@@ -8,7 +8,7 @@ public class Boss3 : Boss
 {
     private Camera m_camera;
     [SerializeField]
-    private GameObject EVoidBullet, Eshield, Barrier;
+    private GameObject EBullet, EVoidBullet, Eshield, Barrier;
     private float m_horizontalSpeed = 0, m_verticalSpeed = 2, ProjectileCD = 200;
     private bool aimRight = true;
     private int rand;
@@ -55,12 +55,12 @@ public class Boss3 : Boss
                 rand = UnityEngine.Random.Range(-50, 50);
                 for (int i = 0; i < BulletFired; i++)
                 {
-                    GameObject tmp = Instantiate(EVoidBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+                    GameObject tmp = Instantiate(EBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                     tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand - (15) * (i - 2)) * Mathf.Deg2Rad), Mathf.Sin((270 + rand - (15)) * Mathf.Deg2Rad), 4);
                 }
                 BulletCDWatch.Restart();
             }
-            else if (ShieldsActive > 0)
+            else if (ShieldsActive > 0) //Bullet pattern if shields are up
             {
                 rand = UnityEngine.Random.Range(-100, -80);
                 GameObject tmp2 = Instantiate(EVoidBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
