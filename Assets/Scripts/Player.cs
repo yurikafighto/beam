@@ -142,7 +142,7 @@ public class Player : Entity
         stopSpell3.Start();
         stopShield = new Stopwatch();
         stopShield.Start();
-
+        OnScoreChange(score);
     }
 
     private void OnCollisionEnter(Collision collision)
