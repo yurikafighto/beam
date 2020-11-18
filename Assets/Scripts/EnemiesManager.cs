@@ -20,17 +20,16 @@ public class EnemiesManager : MonoBehaviour
     public class Wave
     {
         public string wavename;
+        public bool isBoss = false;
         public GroupEnemies[] enemiesGroup;
         public float timeBetweenGroups;
     }
-
-
 
     [SerializeField]
     private Wave[] waves;
     [SerializeField]
     private float timeBetweenWaves = 5;
-    public float waveCountdown;
+    private float waveCountdown;
 
     private int nextWave;
     private Camera m_camera;
@@ -67,6 +66,10 @@ public class EnemiesManager : MonoBehaviour
             }
             else
             {
+                if ( waveCountdown <= 3 && waveCountdown >= 1 && waves[nextWave].isBoss)
+                {
+                    UserInterface.Instance.DisplayBossWarning();
+                }
                 // countdown
                 waveCountdown -= Time.deltaTime;
             }
@@ -172,7 +175,7 @@ public class EnemiesManager : MonoBehaviour
     {
         m_camera = Camera.main;
         nextWave = 0;
-        waveCountdown = timeBetweenWaves;
+        waveCountdown = 4;
         state = SpawnState.COUNTING;
         cleared = false;
     }

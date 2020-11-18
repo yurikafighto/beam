@@ -14,7 +14,8 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     [SerializeField]
     int nbWave;
     [SerializeField]
-    Animator animation;
+    private new Animator animation;
+
 
     public static string bestScoreKey = "BESTSCORE";
     private int currentScore;
@@ -127,5 +128,8 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         pausePanel.SetActive(pause);
     }
 
-
+    public void DisplayBossWarning()
+    {
+        animation.SetTrigger("BossComing");
+    }
 }

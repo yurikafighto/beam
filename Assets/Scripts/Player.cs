@@ -23,7 +23,9 @@ public class Player : Entity
 
     private Stopwatch stopWatchBullet, stopSpell1, stopSpell2, stopSpell3, stopShield;
     private int score = 0;
-    
+    public int playerWidth  = 45;
+    public int playerHeight = 70;
+
     // delegate action
     public static Action<int> OnHPChange = delegate { };
     public static Action<int> OnScoreChange = delegate { };
@@ -53,26 +55,28 @@ public class Player : Entity
         // set screen position limit
         Vector3 screenPos = m_camera.WorldToScreenPoint(transform.position);
         
+
         // move forward
-        if (Input.GetKey(KeyCode.UpArrow) && screenPos.y <= Screen.height)
+        if (Input.GetKey(KeyCode.UpArrow) && screenPos.y < Screen.height - playerHeight)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + m_verticalSpeed * Time.deltaTime, 0);
+
         }
 
         // move backward
-        if (Input.GetKey(KeyCode.DownArrow) && screenPos.y >= 0)
+        if (Input.GetKey(KeyCode.DownArrow) && screenPos.y > playerHeight)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
         }
 
         // move right
-        if (Input.GetKey(KeyCode.RightArrow ) && screenPos.x <= Screen.width)
+        if (Input.GetKey(KeyCode.RightArrow ) && screenPos.x < Screen.width - playerWidth)
         {
             transform.position = new Vector3(transform.position.x + m_horizontalSpeed * Time.deltaTime, transform.position.y, 0);
         }
 
         // move left
-        if (Input.GetKey(KeyCode.LeftArrow) && screenPos.x >= 0)
+        if (Input.GetKey(KeyCode.LeftArrow) && screenPos.x > playerWidth)
         {
             transform.position = new Vector3(transform.position.x - m_horizontalSpeed * Time.deltaTime, transform.position.y, 0);
         }
