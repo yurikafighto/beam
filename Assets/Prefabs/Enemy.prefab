@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4641356611357391254}
   - component: {fileID: 6499471887654005585}
   m_Layer: 0
-  m_Name: ez
+  m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2857608895564988897}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 2715091756419106633}
   m_RootOrder: 0
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 13ef86199db3071428b4dc94f7ccf206, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7d2fb4d3eb387a4468b6b08471da5e54, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -93,8 +93,8 @@ GameObject:
   - component: {fileID: 6047521350228729188}
   - component: {fileID: 3535900696609839639}
   - component: {fileID: 3264912249880061652}
-  - component: {fileID: -1526119246419180616}
   - component: {fileID: -7982681950876042927}
+  - component: {fileID: 9081477962413534007}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -144,6 +144,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -175,24 +176,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-1526119246419180616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5834220349612492750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f043b564798a83a488ca593bc8109af2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 20
-  m_verticalSpeed: 3
-  projectileCD: 1000
-  Ebullet: {fileID: 1465490688751951772, guid: 315f1243be805a84588c93cd05483659, type: 3}
 --- !u!54 &-7982681950876042927
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -209,3 +194,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &9081477962413534007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834220349612492750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f043b564798a83a488ca593bc8109af2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 20
+  m_verticalSpeed: 1.5
+  m_horizontalSpeed: 0

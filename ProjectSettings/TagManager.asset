@@ -8,7 +8,13 @@ TagManager:
   - Boss
   - EBullet
   - Enemy
-  - Ennemy
+  - EBullet10
+  - EBullet20
+  - Shield
+  - StarSurge
+  - Audio
+  - Audio2
+  - Audio3
   layers:
   - Default
   - TransparentFX

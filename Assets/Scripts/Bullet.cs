@@ -24,10 +24,10 @@ public class Bullet : MonoBehaviour
         Vector3 screenPos = m_camera.WorldToScreenPoint(transform.position);
 
         // move forward
-        transform.position = new Vector3(transform.position.x, transform.position.y + m_verticalSpeed * Time.deltaTime, 0);
+        transform.position = new Vector3(transform.position.x + m_horizontalSpeed * Time.deltaTime, transform.position.y + m_verticalSpeed * Time.deltaTime, 0);
 
         //// if out of screen
-        if (screenPos.y >= Screen.height)
+        if (screenPos.y >= Screen.height*2)
         {
             Destroy(gameObject); // destroy projectile
         }
@@ -42,12 +42,21 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        // if collides with enemy 
-        if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss") )
-        {
-            OnHit();
-            Destroy(gameObject);
-        }
+            // if collides with enemy 
+            if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss"))
+            {
+                OnHit();
+                if (!gameObject.CompareTag("StarSurge") || collision.gameObject.CompareTag("Boss"))
+                {
+                    Destroy(gameObject);
+                }
+            }
+
     }
 
+    public void SetSpeed(float horizontal, float vertical, int velocity)
+    {
+        m_horizontalSpeed = horizontal * velocity;
+        m_verticalSpeed = vertical * velocity;
+    }
 }

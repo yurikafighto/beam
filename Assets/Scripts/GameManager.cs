@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviourSingleton<GameManager>
         Cursor.visible = false;
         Time.timeScale = 1.0f;
         playerDied = false;
+        // reset score
+        PlayerPrefs.SetInt(UserInterface.currentScoreKey, 0);
 
     }
 

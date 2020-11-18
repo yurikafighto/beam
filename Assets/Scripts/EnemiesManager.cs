@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System;
 
-public class EnemiesManager : MonoBehaviour
+public class EnemiesManager : MonoBehaviourSingleton<EnemiesManager>
 
 {
     [System.Serializable]
@@ -10,7 +11,8 @@ public class EnemiesManager : MonoBehaviour
         public string groupName;
         public GameObject enemy;
         public int count;
-        public enum EnemyFormation { ARCUP, ARCDOWN, CENTER, RANDOM }
+        public enum EnemyFormation { ARCUP, ARCDOWN, CENTER, RANDOM, HORIZONTAL, VERTICAL }
+        public float spawnCenter;
         public EnemyFormation enemyFormation = EnemyFormation.RANDOM;
     }
 
@@ -18,17 +20,17 @@ public class EnemiesManager : MonoBehaviour
     public class Wave
     {
         public string wavename;
+        public bool isBoss = false;
         public GroupEnemies[] enemiesGroup;
         public float timeBetweenGroups;
     }
-
-
-
+    [SerializeField]
+    private bool isInfiniteLevel = false;
     [SerializeField]
     private Wave[] waves;
     [SerializeField]
     private float timeBetweenWaves = 5;
-    public float waveCountdown;
+    private float waveCountdown;
 
     private int nextWave;
     private Camera m_camera;
@@ -37,6 +39,8 @@ public class EnemiesManager : MonoBehaviour
     private SpawnState state;
 
     private bool cleared;
+
+    public static Action advance = delegate { };
 
     private void Update()
     {
@@ -63,6 +67,10 @@ public class EnemiesManager : MonoBehaviour
             }
             else
             {
+                if ( waveCountdown <=3  && waveCountdown >= 2 && waves[nextWave].isBoss)
+                {
+                    UserInterface.Instance.DisplayBossWarning();
+                }
                 // countdown
                 waveCountdown -= Time.deltaTime;
             }
@@ -79,6 +87,10 @@ public class EnemiesManager : MonoBehaviour
         // if no more incoming wave
         if (nextWave + 1 > waves.Length - 1)
         {
+            if (isInfiniteLevel)
+            {
+                nextWave = 0;
+            }
             cleared = true;
         }
         else
@@ -134,6 +146,20 @@ public class EnemiesManager : MonoBehaviour
                 point = m_camera.ScreenToWorldPoint(new Vector3(x, y, z));
             }
             // spawn in arc down shape
+            else if (enemies.enemyFormation == GroupEnemies.EnemyFormation.HORIZONTAL)
+            {
+                float x = (Screen.width / max) * (i + 0.5f);
+                float y = y0;
+                point = m_camera.ScreenToWorldPoint(new Vector3(x, y, z));
+            }   
+            // spawn in arc down shape
+            else if (enemies.enemyFormation == GroupEnemies.EnemyFormation.VERTICAL)
+            {
+                float x = enemies.spawnCenter * Screen.width;
+                float y = y0 + 100*i;
+                point = m_camera.ScreenToWorldPoint(new Vector3(x, y, z));
+            }
+            // spawn in arc down shape
             else if (enemies.enemyFormation == GroupEnemies.EnemyFormation.CENTER)
             {
                 point = m_camera.ScreenToWorldPoint(new Vector3(x0, y0, z));
@@ -141,20 +167,30 @@ public class EnemiesManager : MonoBehaviour
             // random spawning
             else
             {
-                point = m_camera.ScreenToWorldPoint(new Vector3( Random.Range(2, Screen.width - 2), Random.Range(Screen.height, y0 + r ), z) ); 
+                point = m_camera.ScreenToWorldPoint(new Vector3( UnityEngine.Random.Range(2, Screen.width - 2), UnityEngine.Random.Range(Screen.height, y0 + r ), z) ); 
 
             }
             // instantiate ennemies
             Instantiate(enemies.enemy, point, enemies.enemy.transform.rotation);
-        }    
-        
+        }
+        advance();
     }
 
-    private void Awake()
+    public int getterNbWave()
+    {
+        int nb = 0;
+        for (int i = 0; i < waves.Length; i++)
+        {
+            nb +=waves[i].enemiesGroup.Length;
+        }
+        return nb;
+    }
+
+    protected override void Awake()
     {
         m_camera = Camera.main;
         nextWave = 0;
-        waveCountdown = timeBetweenWaves;
+        waveCountdown = 4;
         state = SpawnState.COUNTING;
         cleared = false;
     }
