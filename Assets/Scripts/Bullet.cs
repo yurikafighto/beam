@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
         transform.position = new Vector3(transform.position.x + m_horizontalSpeed * Time.deltaTime, transform.position.y + m_verticalSpeed * Time.deltaTime, 0);
 
         //// if out of screen
-        if (screenPos.y >= Screen.height)
+        if (screenPos.y >= Screen.height*2)
         {
             Destroy(gameObject); // destroy projectile
         }

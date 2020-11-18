@@ -23,8 +23,8 @@ public class Boss2 : Boss
         {
             BossMovement();
             FireBullet();
-            FireSkills();
-            CheckState(); //Triggers second phase if hp < 50%
+            FireSkills();   //Fire boss skills if possible
+            CheckState();   //Triggers second phase if hp < 50%
         }
 
     }
@@ -39,15 +39,11 @@ public class Boss2 : Boss
         {
             m_verticalSpeed = 0;
         }
-        transform.position = new Vector3(transform.position.x, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);//mouvement de base
-        //if (Skill2Charging)
-        //{
-        //    transform.position = new Vector3(transform.position.x + m_horizontalSpeed * Time.deltaTime, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
-        //}
+        transform.position = new Vector3(transform.position.x, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
 
     }
 
-    private void FireBullet()
+    private void FireBullet() // Fire 3 Bullets in given direction if no skill is active
     {
         if (BulletCDWatch.ElapsedMilliseconds > ProjectileCD && !Skill2Charging)
         {
@@ -79,11 +75,11 @@ public class Boss2 : Boss
             }
             else if (NextSkill == 3 && BulletCDWatch.ElapsedMilliseconds > StarTime) // Skill 2 : Fire bullets all over the screen
             {
-                if (!Skill2Charging)
+                if (!Skill2Charging) //Enter charging stance
                 {
                     Skill2Charging = true;
                 }
-                else if (AngleS2 >= 320)
+                else if (AngleS2 >= 320) //Fire a bullet 23 degrees after the other
                 {
                     GameObject tmp = Instantiate(Ebullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                     tmp.GetComponent<EBullet>().SetSpeed(Mathf.Cos(AngleS2 * Mathf.Deg2Rad), Mathf.Sin(AngleS2 * Mathf.Deg2Rad), 4);
@@ -96,7 +92,7 @@ public class Boss2 : Boss
                         AngleS2 += starGap;
                     }
                 }
-                else //End of the skill
+                else //End of the skill and reset the base state
                 {
                     AngleS2 = 2860;
                     Skill2Charging = false; 
@@ -119,7 +115,7 @@ public class Boss2 : Boss
             StarTime = 20; 
             starGap = 23;
         }
-        if (hp < maxHP * 0.15 && !LastPhase) //check if the boss gets to thrid phase and sets it in permanant skill 2 phase
+        if (hp < maxHP * 0.15 && !LastPhase) 
         {
             LastPhase = true;
             NextSkill = 3;
@@ -149,7 +145,7 @@ public class Boss2 : Boss
         {
             hp -= 10;
         }
-        // if collides with bullet
+        // if collides with StarSurge bullet
         if (collision.gameObject.CompareTag("StarSurge"))
         {
             hp -= 50;

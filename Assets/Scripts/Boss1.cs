@@ -23,9 +23,9 @@ public class Boss1 : Boss
         if (!GameManager.Instance.GetPauseStatus() && !GameManager.Instance.IsDead())
         {
             BossMovement();
-            FireLaser();
-            FireBullet();
-            CheckState(); //Triggers second phase if hp < 50%
+            FireLaser();    //Boss Skill
+            FireBullet();   //Boss base attack
+            CheckState(); //Triggers second phase if hp < 66%...
         }
 
     }
@@ -41,7 +41,7 @@ public class Boss1 : Boss
             m_verticalSpeed = 0;
         }
 
-        if (!LaserCharging) //Boss stops moving when it charges laser
+        if (!LaserCharging) //Boss stops moving when it charges laser, else moves left and right
         {
             if (moveRight)
             {
@@ -52,9 +52,8 @@ public class Boss1 : Boss
                 transform.position = new Vector3(transform.position.x - m_horizontalSpeed * Time.deltaTime, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
             }
         }
-        //moves left and right
 
-        if (transform.position.x >= 3 && moveRight)
+        if (transform.position.x >= 3 && moveRight)     //moves left and right depending on its screen position
         {
             moveRight = false;
         }
@@ -65,7 +64,7 @@ public class Boss1 : Boss
         }
     }
 
-    private void FireBullet()
+    private void FireBullet() //Fire bullets in 3 random directions
     {
         if (BulletCDWatch.ElapsedMilliseconds > ProjectileCD && !LaserCharging)
         {
@@ -79,13 +78,13 @@ public class Boss1 : Boss
         }
     }
 
-    private void FireLaser()
+    private void FireLaser() // Fire warning non-damaging bullet and then fire Laser in these directions
     {
         if (LaserCDWatch.ElapsedMilliseconds > LaserCD)
         {
             if (!LaserCharging)
             {
-                LaserCharging = true;
+                LaserCharging = true;   //Enters charging stance if it isnt already and fire warning bullets
                 rand = UnityEngine.Random.Range(-50, 50);
                 rand2 = UnityEngine.Random.Range(-50, 50);
                 rand3 = UnityEngine.Random.Range(-50, 50);
@@ -100,7 +99,7 @@ public class Boss1 : Boss
                 }
                 LaserWatch.Restart();
             }
-            if (LaserWatch.ElapsedMilliseconds > LaserChargeTime)
+            if (LaserWatch.ElapsedMilliseconds > LaserChargeTime) // Fire lasers after a given charging time
             {
                 for (int i = 0; i < 30; i++)
                 {
@@ -115,21 +114,20 @@ public class Boss1 : Boss
                 LaserCDWatch.Restart();
                 BulletCDWatch.Restart();
             }
-            // subscribe to Bullet on hit
         }
     }
 
     private void CheckState()
     {
-        if (hp < maxHP * 0.70 && BulletFired == 1) //check if the boss gets to second phase and if it isnt already
+        if (hp < maxHP * 0.70 && BulletFired == 1)  //check if the boss gets to next phase and if it isnt already
         {
-            BulletFired = 2;
+            BulletFired = 2;                        //upgrade its stats to make the fight harder
             ProjectileCD = 600;
             LaserCD = 3500;
             LaserChargeTime = 1000;
             m_horizontalSpeed = 2;
         }
-        if (hp < maxHP * 0.35 && BulletFired == 2) //check if the boss gets to second phase and if it isnt already
+        if (hp < maxHP * 0.35 && BulletFired == 2) 
         {
             BulletFired = 3;
             ProjectileCD = 500;
@@ -144,7 +142,7 @@ public class Boss1 : Boss
         base.Awake();
         // retrieve the main camera
         m_camera = Camera.main;
-        OnBossAppear(true);
+        OnBossAppear(true);     //boss movement at the beginning of the fight
         LaserWatch = new Stopwatch();
         LaserWatch.Start();
         LaserCDWatch = new Stopwatch();
@@ -162,7 +160,7 @@ public class Boss1 : Boss
             hp -= 10;
         }
 
-        // if collides with bullet
+        // if collides with StarSurge Bullet
         if (collision.gameObject.CompareTag("StarSurge"))
         {
             hp -= 50;
@@ -173,7 +171,7 @@ public class Boss1 : Boss
         // if no more hp
         if (hp <= 0)
         {
-            // destroy the enemy object
+            // destroy the enemy object and award score to player
             Destroy(gameObject);
             ScoreBoss();
             OnBossAppear(false);

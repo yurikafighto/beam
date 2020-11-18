@@ -57,26 +57,26 @@ public class Player : Entity
         
 
         // move forward
-        if (Input.GetKey(KeyCode.UpArrow) && screenPos.y < Screen.height - playerHeight)
+        if (Input.GetKey(KeyCode.UpArrow) && screenPos.y < Screen.height - playerHeight/2)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + m_verticalSpeed * Time.deltaTime, 0);
 
         }
 
         // move backward
-        if (Input.GetKey(KeyCode.DownArrow) && screenPos.y > playerHeight)
+        if (Input.GetKey(KeyCode.DownArrow) && screenPos.y > playerHeight/2)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);
         }
 
         // move right
-        if (Input.GetKey(KeyCode.RightArrow ) && screenPos.x < Screen.width - playerWidth)
+        if (Input.GetKey(KeyCode.RightArrow ) && screenPos.x < Screen.width - playerWidth/2)
         {
             transform.position = new Vector3(transform.position.x + m_horizontalSpeed * Time.deltaTime, transform.position.y, 0);
         }
 
         // move left
-        if (Input.GetKey(KeyCode.LeftArrow) && screenPos.x > playerWidth)
+        if (Input.GetKey(KeyCode.LeftArrow) && screenPos.x > playerWidth/2)
         {
             transform.position = new Vector3(transform.position.x - m_horizontalSpeed * Time.deltaTime, transform.position.y, 0);
         }
@@ -146,7 +146,6 @@ public class Player : Entity
         stopSpell3.Start();
         stopShield = new Stopwatch();
         stopShield.Start();
-        OnScoreChange(score);
     }
 
     private void OnCollisionEnter(Collision collision)
