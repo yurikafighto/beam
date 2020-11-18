@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 7162140773003737324}
   - component: {fileID: 7162140773003737325}
   - component: {fileID: 3994436471427982695}
+  - component: {fileID: -2326459474828705323}
   m_Layer: 0
   m_Name: ERumble
   m_TagString: Untagged
@@ -193,3 +194,19 @@ MonoBehaviour:
   m_horizontalSpeed: 0
   projectileCD: 700
   Ebullet: {fileID: 1465490688751951772, guid: 315f1243be805a84588c93cd05483659, type: 3}
+--- !u!54 &-2326459474828705323
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7162140773003737326}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

@@ -6,7 +6,7 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     [SerializeField]
     GameObject gameOver, win, player, boss, pausePanel, playing;
     [SerializeField]
-    Button playAgain, resume, mainMenuPause, mainMenuGameOver;
+    Button playAgain, resume, mainMenuPause, mainMenuGameOver, winNextLevel;
     [SerializeField]
     Text score, newBest, gameOverScore, winScore;
     [SerializeField]
@@ -127,6 +127,7 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         mainMenuPause.onClick.AddListener(GameManager.Instance.BackToMain);
         mainMenuGameOver.onClick.AddListener(GameManager.Instance.BackToMain);
         resume.onClick.AddListener(delegate { GameManager.Instance.Play(true); });
+        winNextLevel.onClick.AddListener(GameManager.Instance.NextLevel);
 
     }
     public void TogglePlayPause(bool pause)

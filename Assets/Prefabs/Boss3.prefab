@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a75acc7053503648865347bdc43169d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 750
+  maxHP: 700
   EBullet: {fileID: 1465490688751951772, guid: 315f1243be805a84588c93cd05483659, type: 3}
   EVoidBullet: {fileID: 2401327464032980377, guid: 07fb6b1de3df0ec4f9e1aa99147a1254,
     type: 3}

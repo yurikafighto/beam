@@ -12,7 +12,7 @@ public class Boss3 : Boss
     private float m_horizontalSpeed = 0, m_verticalSpeed = 2, ProjectileCD = 200;
     private bool aimRight = true;
     private int rand;
-    private int BulletFired = 3, ShieldsActive = 0, aim = 0, aimSpeed = 2;
+    private int BulletFired = 3, ShieldsActive = 0, aim = 30, aimSpeed = 2;
 
 
     private Stopwatch BulletCDWatch;
@@ -40,17 +40,17 @@ public class Boss3 : Boss
         if (transform.position.y <= 2.5 && m_verticalSpeed != 0)
         {
             m_verticalSpeed = 0;
-            SummonShields(0, -3);
+            SummonShields(0, -2.8f);
         }
         transform.position = new Vector3(transform.position.x, transform.position.y - m_verticalSpeed * Time.deltaTime, 0);//mouvement de base
 
     }
 
-    private void FireBullet()
+    private void FireBullet() // Bullet Pattern changes if boss has shields active or not
     {
         if (BulletCDWatch.ElapsedMilliseconds>ProjectileCD)
         {
-            if (ShieldsActive <= 0 && BulletCDWatch.ElapsedMilliseconds > ProjectileCD*3) //Bullet Pattern if shields are down (slower attaack speed)
+            if (ShieldsActive <= 0 && BulletCDWatch.ElapsedMilliseconds > ProjectileCD*3) //Bullet Pattern if shields are down (slower attaack speed but multiple projectile)
             {
                 rand = UnityEngine.Random.Range(-50, 50);
                 for (int i = 0; i < BulletFired; i++)
@@ -60,7 +60,7 @@ public class Boss3 : Boss
                 }
                 BulletCDWatch.Restart();
             }
-            else if (ShieldsActive > 0) //Bullet pattern if shields are up
+            else if (ShieldsActive > 0) //Bullet pattern if shields are up (triple gatling gun pattern)
             {
                 rand = UnityEngine.Random.Range(-100, -80);
                 GameObject tmp2 = Instantiate(EVoidBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
@@ -71,7 +71,8 @@ public class Boss3 : Boss
                 rand = UnityEngine.Random.Range(80, 100);
                 GameObject tmp4 = Instantiate(EVoidBullet, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
                 tmp4.GetComponent<EBullet>().SetSpeed(Mathf.Cos((270 + rand + aim) * Mathf.Deg2Rad), Mathf.Sin((270 + rand + aim) * Mathf.Deg2Rad), 7);
-                if (aimRight)//rotate the direction the boss is aiming
+
+                if (aimRight)//rotate the direction the boss is aiming and changes it if it is defferent from at least 30 degrees from original saiming direction
                 {
                     aim += aimSpeed;
                     if (aim >= 30)
@@ -92,7 +93,7 @@ public class Boss3 : Boss
         }
     }
 
-    private void SummonShields(float dx, float dy)
+    private void SummonShields(float dx, float dy) // Summon the shields at designed position and activate the barrier if it isnt already
     {
         GameObject tmp = Instantiate(Eshield, new Vector3(transform.position.x + dx, transform.position.y + dy, 0), transform.rotation);
         if (ShieldsActive == 0)
@@ -104,20 +105,20 @@ public class Boss3 : Boss
 
     private void CheckState()
     {
-        if (hp < maxHP * 0.66 && BulletFired == 3) //summons second wave of shields
+        if (hp < maxHP * 0.6 && BulletFired == 3) //summons second wave of shields an gain stats
         {
             BulletFired = 5;
             aimSpeed = 4;
-            SummonShields(3, 0);
-            SummonShields(-3, 0);
+            SummonShields(2.8f, 0);
+            SummonShields(-2.8f, 0);
         }
-        if (hp < maxHP * 0.33 && BulletFired == 5) //summons third wave of shields
+        if (hp < maxHP * 0.2 && BulletFired == 5) //summons third wave of shields
         {
             BulletFired = 7;
             aimSpeed = 6;
-            SummonShields(3, 0);
-            SummonShields(0, -3);
-            SummonShields(-3, 0);
+            SummonShields(2.8f, 0);
+            SummonShields(0, -2.8f);
+            SummonShields(-2.8f, 0);
         }
     }
     private void ShieldDestroyed()
