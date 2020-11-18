@@ -2,7 +2,7 @@
 using UnityEngine;
 using System;
 
-public class EnemiesManager : MonoBehaviour
+public class EnemiesManager : MonoBehaviourSingleton<EnemiesManager>
 
 {
     [System.Serializable]
@@ -169,6 +169,16 @@ public class EnemiesManager : MonoBehaviour
             Instantiate(enemies.enemy, point, enemies.enemy.transform.rotation);
         }
         advance();
+    }
+
+    public int getterNbWave()
+    {
+        int nb = 0;
+        for (int i = 0; i < waves.Length; i++)
+        {
+            nb +=waves[i].enemiesGroup.Length;
+        }
+        return nb;
     }
 
     private void Awake()

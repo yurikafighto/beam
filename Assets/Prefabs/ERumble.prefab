@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 30
-  m_verticalSpeed: 2
+  m_verticalSpeed: 1.5
   m_horizontalSpeed: 0
   projectileCD: 700
   Ebullet: {fileID: 1465490688751951772, guid: 315f1243be805a84588c93cd05483659, type: 3}

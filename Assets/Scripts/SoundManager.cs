@@ -5,9 +5,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField]
-    private AudioClip bulletSound, laserSound, starSound, barrierSound;
-    [SerializeField]
-    private GameObject player;
+    private AudioClip bulletSound, laserSound, starSound, barrierSound, music;
 
     private void soundBullet()
     {
@@ -17,19 +15,19 @@ public class SoundManager : MonoBehaviour
     }
     private void soundLaser()
     {
-        AudioSource audioSource = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioSource>();
+        AudioSource audioSource = GameObject.FindGameObjectWithTag("Audio2").GetComponent<AudioSource>();
         audioSource.volume = 0.2f;
         audioSource.PlayOneShot(laserSound);
     }
     private void soundStar()
     {
-        AudioSource audioSource = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioSource>();
+        AudioSource audioSource = GameObject.FindGameObjectWithTag("Audio2").GetComponent<AudioSource>();
         audioSource.volume = 0.2f;
         audioSource.PlayOneShot(starSound);
     }
     private void soundBarrier()
     {
-        AudioSource audioSource = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioSource>();
+        AudioSource audioSource = GameObject.FindGameObjectWithTag("Audio2").GetComponent<AudioSource>();
         audioSource.volume = 0.2f;
         audioSource.PlayOneShot(barrierSound);
     }

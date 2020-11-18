@@ -8,7 +8,7 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     [SerializeField]
     Button playAgain, resume, mainMenuPause, mainMenuGameOver;
     [SerializeField]
-    Text score, newBest, gameOverScore;
+    Text score, newBest, gameOverScore, winScore;
     [SerializeField]
     Slider hpBar, hpBoss, progressBar;
     [SerializeField]
@@ -32,6 +32,7 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         hpBoss.maxValue = maxBoss;
         hpBoss.value = maxBoss;
         progressBar.value = 0;
+        int nbWave = EnemiesManager.Instance.getterNbWave();
         progressBar.maxValue = nbWave;
 
         currentScore = 0;
@@ -66,6 +67,20 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         }
     }
 
+    private void OnScoreChange(int playerScore)
+    {
+        currentScore = playerScore;
+
+        int tmp = playerScore;
+        string tmpString = "";
+        while (tmp < 100000)
+        {
+            tmpString += "0";
+            tmp = tmp * 10;
+        }
+        score.text = tmpString + playerScore;
+    }
+
     private void OnBossHPChange(int currentHP)
     {
         hpBoss.value = currentHP;
@@ -73,6 +88,10 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         if (currentHP <= 0)
         {
             Cursor.visible = true;
+
+            // display score
+            winScore.text = $"SCORE : {currentScore}";
+
             win.SetActive(true);
             playing.SetActive(false);
         }
@@ -83,22 +102,6 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         hpBoss.gameObject.SetActive(b);
     }
 
-    private void OnScoreChange(int playerScore)
-    {
-        //currentScore = playerScore;
-        //score.text = $"SCORE : {currentScore}";
-
-        currentScore = playerScore;
-
-        int tmp = playerScore;
-        string tmpString = "";
-        while (tmp < 100000)
-        {
-            tmpString += "0";
-            tmp = tmp * 10;
-        }
-        score.text = tmpString+playerScore;
-    }
 
     private void advance()
     {
