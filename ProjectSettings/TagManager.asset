@@ -12,6 +12,7 @@ TagManager:
   - EBullet20
   - Shield
   - StarSurge
+  - Audio
   layers:
   - Default
   - TransparentFX
