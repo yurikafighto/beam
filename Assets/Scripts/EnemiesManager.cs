@@ -193,9 +193,5 @@ public class EnemiesManager : MonoBehaviourSingleton<EnemiesManager>
         waveCountdown = 4;
         state = SpawnState.COUNTING;
         cleared = false;
-        if (isInfiniteLevel)
-        {
-            UserInterface.Instance.infinite();
-        }
     }
 }

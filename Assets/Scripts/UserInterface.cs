@@ -16,8 +16,6 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
     [SerializeField]
     private new Animator animation;
 
-    private bool isInfinite = false;
-
 
     public static string bestScoreKey = "BESTSCORE";
     public static string currentScoreKey = "CURRENTSCORE";
@@ -88,16 +86,14 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
 
         if (currentHP <= 0)
         {
-            if (isInfinite)
-            {
-                Cursor.visible = true;
 
-                // display score
-                winScore.text = $"SCORE : {currentScore}";
+            Cursor.visible = true;
 
-                win.SetActive(true);
-                playing.SetActive(false);
-            }
+            // display score
+            winScore.text = $"SCORE : {currentScore}";
+
+            win.SetActive(true);
+            playing.SetActive(false);
 
         }
     }
@@ -155,8 +151,5 @@ public class UserInterface : MonoBehaviourSingleton<UserInterface>
         return tmpString;
     }
 
-    public void infinite()
-    {
-        isInfinite = true;
-    }
+
 }
